@@ -24,7 +24,7 @@ public class AppApplicationTests {
 
 	@Test
 	public void contextLoads() throws Exception {
-		this.mockMvc.perform(get("/testing")).andDo(print()).andExpect(status().isOk())
+		this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
 				.andExpect(content().string(containsString("Hello World")));
 	}
 }
