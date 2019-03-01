@@ -32,6 +32,7 @@ public class User {
     private String last_name;
     private String email;
     private Program program;
+    private Project project;
 
     public User() {
         this(DEFAULT_MEMBER_ID, Role.STUDENT, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME);
@@ -72,6 +73,10 @@ public class User {
 
     public Program getProgram() { return this.program; }
     public void setProgram(Program program) { this.program = program; }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    public Project getProject() { return this.project; }
+    public void setProject(Project project) { this.project = project; }
 
     @Override
     public String toString() {
