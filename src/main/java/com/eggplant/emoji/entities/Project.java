@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -17,6 +17,7 @@ import com.eggplant.emoji.entities.User.Program;
 @Entity
 public class Project {
     private static final int MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 2;
+    private static final int MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 5;
 
     private Long id;
     private String project_name;
@@ -58,11 +59,13 @@ public class Project {
 
     @NotNull
     @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
+    @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     public int getMinNumberOfStudents() { return this.min_number_of_students; }
     public void setMinNumberOfStudents(int min_number_of_students) { this.min_number_of_students = min_number_of_students; }
 
     @NotNull
     @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
+    @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     public int getMaxNumberOfStudents() { return this.max_number_of_students; }
     public void setMaxNumberOfStudents(int max_number_of_students) { this.max_number_of_students = max_number_of_students; }
 
