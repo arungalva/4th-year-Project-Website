@@ -4,19 +4,19 @@ import javax.persistence.*;
 
 @Entity
 public class User {
-    private static final Int DEFAULT_MEMBER_ID = 100100100;
-    private static final String DEFAULT_FIRST_NAME = 'John';
-    private static final String DEFAULT_LAST_NAME = 'Doe';
-    private static final String DEFAULT_EMAIL = 'john.doe@carleton.ca';
+    private static final int DEFAULT_MEMBER_ID = 100100100;
+    private static final String DEFAULT_FIRST_NAME = "John";
+    private static final String DEFAULT_LAST_NAME = "Doe";
+    private static final String DEFAULT_EMAIL = "john.doe@carleton.ca";
 
     enum Role {
         STUDENT,
         PROFESSER,
-        COORDINATOR
+        COORDINATOR;
     }
 
     private Long id;
-    private Int member_id;
+    private int member_id;
     private Role role;
     private String first_name;
     private String last_name;
@@ -26,7 +26,7 @@ public class User {
         this(DEFAULT_MEMBER_ID, Role.STUDENT, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL);
     }
 
-    public User(Int member_id, Role role, String first_name, String last_name, String email) {
+    public User(int member_id, Role role, String first_name, String last_name, String email) {
         this.member_id = member_id;
         this.role = role;
         this.first_name = first_name;
@@ -40,9 +40,9 @@ public class User {
 
     public void setId(Long id) { this.id = id; }
 
-    public Int getMemberId() { return this.member_id; }
+    public int getMemberId() { return this.member_id; }
 
-    public void setMemberId(Int member_id) { this.member_id = member_id; }
+    public void setMemberId(int member_id) { this.member_id = member_id; }
 
     public Role getRole() { return this.role; }
 

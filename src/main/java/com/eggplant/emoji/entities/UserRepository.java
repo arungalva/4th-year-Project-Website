@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import User.Role;
+import com.eggplant.emoji.entities.User.Role;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
