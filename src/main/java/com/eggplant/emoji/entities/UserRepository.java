@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import com.eggplant.emoji.entities.User.Role;
+import com.eggplant.emoji.entities.User.Program;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
@@ -16,6 +17,7 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findByFirstName(String first_name);
     List<User> findByLastName(String last_name);
     List<User> findByEmail(String email);
+    List<User> findByProgram(Program program);
 
     @Modifying
     @Transactional
