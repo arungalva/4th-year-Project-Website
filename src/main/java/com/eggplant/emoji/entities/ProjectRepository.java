@@ -13,7 +13,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 
     List<Project> findById(int id);
     List<Project> findByCreatedBy(User createdBy);
-    List<Project> findByProjectName(String project_name);
+    List<Project> findByProjectName(String projectName);
     List<Project> findByStudentsContains(User student);
     List<Project> findByCreatedDateAfter(Date date);
     List<Project> findByCreatedDateBefore(Date date);
