@@ -90,7 +90,7 @@ public class Project {
     public void setStudents(List<User> students) { this.students = students; }
 
     public EnumSet<Program> getProgramRestrictions() { return this.programRestrictions; }
-    public void setProgramRestrictions(List<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
+    public void setProgramRestrictions(EnumSet<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
 
     @Override
     public String toString() {
