@@ -1,6 +1,7 @@
 package com.eggplant.emoji.entities;
 
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.*;
@@ -16,67 +17,80 @@ import com.eggplant.emoji.entities.User.Program;
 
 @Entity
 public class Project {
-    private static final int MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 2;
-    private static final int MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 5;
+    public static final String DEFAULT_PROJECT_NAME = "Dummy Project";
+    public static final String DEFAULT_PROJECT_DESCRIPTION = "Dummy Project Description";
+    public static final int MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 2;
+    public static final int MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 5;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String project_name;
+    @NotNull
+    private String projectName;
+    @NotNull
     private String description;
-    private int min_number_of_students;
-    private int max_number_of_students;
+    @NotNull
+    @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
+    @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
+    private int minNumberOfStudents;
+    @NotNull
+    @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
+    @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
+    private int maxNumberOfStudents;
+    @NotNull
+    private EnumSet<Program> programRestrictions;
+    @NotNull
+    @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     private List<User> students;
-    private List<Program> program_restrictions;
 
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
+    @Temporal(TemporalType.DATE)
     private Date createdDate;
     @Column(name = "modified_date")
     @LastModifiedDate
+    @Temporal(TemporalType.DATE)
     private Date modifiedDate;
-    @Column(name = "created_by")
+    @JoinColumn(name = "created_by")
     @CreatedBy
     private User createdBy;
-    @Column(name = "modified_by")
+    @JoinColumn(name = "modified_by")
     @LastModifiedBy
     private User modifiedBy;
 
     public Project() {
+        this(DEFAULT_PROJECT_NAME, DEFAULT_PROJECT_DESCRIPTION, MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, EnumSet.allOf(Program.class));
+    }
+
+    public Project(String projectName, String description, int minNumberOfStudents, int maxNumberOfStudents, EnumSet<Program> programRestrictions) {
+        this.projectName = projectName;
+        this.description = description;
+        this.minNumberOfStudents = minNumberOfStudents;
+        this.maxNumberOfStudents = maxNumberOfStudents;
+        this.programRestrictions = programRestrictions;
         this.students = new ArrayList<User>();
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     public Long getId() { return this.id; }
     public void setId(Long id) { this.id = id; }
 
-    @NotNull
-    public String getProjectName() { return this.project_name; }
-    public void setProjectName(String project_name) { this.project_name = project_name; }
+    public String getProjectName() { return this.projectName; }
+    public void setProjectName(String projectName) { this.projectName = projectName; }
 
-    @NotNull
     public String getDescription() { return this.description; }
     public void setDescription(String description) { this.description = description; }
 
-    @NotNull
-    @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
-    @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
-    public int getMinNumberOfStudents() { return this.min_number_of_students; }
-    public void setMinNumberOfStudents(int min_number_of_students) { this.min_number_of_students = min_number_of_students; }
+    public int getMinNumberOfStudents() { return this.minNumberOfStudents; }
+    public void setMinNumberOfStudents(int minNumberOfStudents) { this.minNumberOfStudents = minNumberOfStudents; }
 
-    @NotNull
-    @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
-    @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
-    public int getMaxNumberOfStudents() { return this.max_number_of_students; }
-    public void setMaxNumberOfStudents(int max_number_of_students) { this.max_number_of_students = max_number_of_students; }
+    public int getMaxNumberOfStudents() { return this.maxNumberOfStudents; }
+    public void setMaxNumberOfStudents(int maxNumberOfStudents) { this.maxNumberOfStudents = maxNumberOfStudents; }
 
-    @NotNull
-    @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     public List<User> getStudents() { return this.students; }
     public void setStudents(List<User> students) { this.students = students; }
 
-    @NotNull
-    public List<Program> getProgramRestrictions() { return this.program_restrictions; }
-    public void setProgramRestrictions(List<Program> program_restrictions) { this.program_restrictions = program_restrictions; }
+    public EnumSet<Program> getProgramRestrictions() { return this.programRestrictions; }
+    public void setProgramRestrictions(List<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
 
     @Override
     public String toString() {
