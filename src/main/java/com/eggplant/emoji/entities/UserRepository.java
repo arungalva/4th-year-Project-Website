@@ -12,10 +12,10 @@ import com.eggplant.emoji.entities.User.Program;
 public interface UserRepository extends CrudRepository<User, Long> {
 
     List<User> findById(int id);
-    List<User> findByMemberId(int member_id);
+    List<User> findByMemberId(int memberId);
     List<User> findByRole(Role role);
-    List<User> findByFirstName(String first_name);
-    List<User> findByLastName(String last_name);
+    List<User> findByFirstName(String firstName);
+    List<User> findByLastName(String lastName);
     List<User> findByEmail(String email);
     List<User> findByProgram(Program program);
 
