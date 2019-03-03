@@ -1,6 +1,5 @@
 package com.eggplant.emoji.entities;
 
-import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.ArrayList;
@@ -8,15 +7,11 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import com.eggplant.emoji.entities.User.Program;
 
 @Entity
-public class Project {
+public class Project extends Auditable<String>{
     public static final String DEFAULT_PROJECT_NAME = "Dummy Project";
     public static final String DEFAULT_PROJECT_DESCRIPTION = "Dummy Project Description";
     public static final int MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 2;
@@ -43,20 +38,6 @@ public class Project {
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     private List<User> students;
 
-    @Column(name = "created_date", nullable = false, updatable = false)
-    @CreatedDate
-    @Temporal(TemporalType.DATE)
-    private Date createdDate;
-    @Column(name = "modified_date")
-    @LastModifiedDate
-    @Temporal(TemporalType.DATE)
-    private Date modifiedDate;
-    @JoinColumn(name = "created_by")
-    @CreatedBy
-    private User createdBy;
-    @JoinColumn(name = "modified_by")
-    @LastModifiedBy
-    private User modifiedBy;
 
     public Project() {
         this(DEFAULT_PROJECT_NAME, DEFAULT_PROJECT_DESCRIPTION, MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, EnumSet.allOf(Program.class));
