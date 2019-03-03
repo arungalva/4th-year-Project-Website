@@ -9,4 +9,4 @@ deploy:
 services:
   - mysql
 before_install:
-  - mysql -u root --password="" < test/travis.sql
+  - mysql -u root --password="" < testDBSetup.sql
