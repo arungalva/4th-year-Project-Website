@@ -73,6 +73,31 @@ public class Project extends Auditable<String>{
     public EnumSet<Program> getProgramRestrictions() { return this.programRestrictions; }
     public void setProgramRestrictions(EnumSet<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
 
+    public boolean addStudent(User student) {
+        if (this.students.contains(student)) {
+            return false;
+        }
+        if (student.getRole() != User.Role.STUDENT) {
+            return false;
+        }
+        if (this.students.size() == this.maxNumberOfStudents) {
+            return false;
+        }
+        if (!this.programRestrictions.contains(student.getProgram())) {
+            return false;
+        }
+        this.students.add(student);
+        return true;
+    }
+
+    public boolean removeStudent(User student) {
+        if (this.students.contains(student)) {
+            this.students.remove(student);
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return this.description;
