@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class ProfessorController {
 
-    @RequestMapping("/professor")
+    @GetMapping("/professor")
     public String index(){
         return "professor";
     }
