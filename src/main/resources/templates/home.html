@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>4th-Year-Project-Home-Page</title>
+
+    <link rel="stylesheet" type="text/css" href="vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div th:insert="fragments/homeheader :: homeheader"></div>
+
+<div class="ui inverted vertical masthead center aligned segment" id="dropdownsection">
+    <div class="ui text container">
+        <img class="centerlogo" src="assets/images/white_carleton_logo.svg">
+        <h1 class="ui inverted header">
+            Welcome to SYSC 4907 - Engineering Project
+        </h1>
+        <h5>Use the navigation above to see all things project, announcements and more.</h5>
+        <div class="ui huge primary button">View Course Outline <i class="right arrow icon"></i></div>
+    </div>
+</div>
+
+<div class="ui main container">
+    <a href="professor" target="_self" rel="noopener noreferrer">
+        <button class="ui button">Professor View</button>
+    </a>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+<script src="js/custom.js"></script>
+</body>
+</html>
