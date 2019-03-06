@@ -50,84 +50,111 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td rowspan="4">1</td>
-            <td rowspan="4">Sensact: Generic assistive device interface</td>
-            <td rowspan="4">Biomed</td>
-            <td>Kyra Bloomfield</td>
-            <td>Biomed</td>
-            <td rowspan="4">
-                <div class="ui vertical animated blue button" tabindex="0">
-                    <div class="hidden content">Edit</div>
-                    <div class="visible content">
-                        <i class="edit icon"></i>
+        <div th:if="${#lists.isEmpty(projects)}">
+            <tr>
+                <td rowspan="4">1</td>
+                <td rowspan="4">Sensact: Generic assistive device interface</td>
+                <td rowspan="4">Biomed</td>
+                <td>Kyra Bloomfield</td>
+                <td>Biomed</td>
+                <td rowspan="4">
+                    <div class="ui vertical animated blue button" tabindex="0">
+                        <div class="hidden content">Edit</div>
+                        <div class="visible content">
+                            <i class="edit icon"></i>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td rowspan="4">
-                <div class="ui vertical animated red button" tabindex="0">
-                    <div class="hidden content">Archive</div>
-                    <div class="visible content">
-                        <i class="archive icon"></i>
+                </td>
+                <td rowspan="4">
+                    <div class="ui vertical animated red button" tabindex="0">
+                        <div class="hidden content">Archive</div>
+                        <div class="visible content">
+                            <i class="archive icon"></i>
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Katie Miller</td>
-            <td>Biomed</td>
-        </tr>
-        <tr>
-            <td>Carly Roos</td>
-            <td>Biomed</td>
-        </tr>
-        <tr>
-            <td>Allison Sherwin</td>
-            <td>Biomed</td>
-        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td>Katie Miller</td>
+                <td>Biomed</td>
+            </tr>
+            <tr>
+                <td>Carly Roos</td>
+                <td>Biomed</td>
+            </tr>
+            <tr>
+                <td>Allison Sherwin</td>
+                <td>Biomed</td>
+            </tr>
 
-        <tr>
-            <td rowspan="4">2</td>
-            <td rowspan="4">Who's Got The Kids?</td>
-            <td rowspan="4">SE</td>
-            <td>Alexandre Cournoyer</td>
-            <td>SE</td>
-            <td rowspan="4">
-                <div class="ui vertical animated blue button" tabindex="0">
-                    <div class="hidden content">Edit</div>
-                    <div class="visible content">
-                        <i class="edit icon"></i>
+            <tr>
+                <td rowspan="4">2</td>
+                <td rowspan="4">Who's Got The Kids?</td>
+                <td rowspan="4">SE</td>
+                <td>Alexandre Cournoyer</td>
+                <td>SE</td>
+                <td rowspan="4">
+                    <div class="ui vertical animated blue button" tabindex="0">
+                        <div class="hidden content">Edit</div>
+                        <div class="visible content">
+                            <i class="edit icon"></i>
+                        </div>
                     </div>
-                </div>
-            </td>
-            <td rowspan="4">
-                <div class="ui vertical animated red button" tabindex="0">
-                    <div class="hidden content">Archive</div>
-                    <div class="visible content">
-                        <i class="archive icon"></i>
+                </td>
+                <td rowspan="4">
+                    <div class="ui vertical animated red button" tabindex="0">
+                        <div class="hidden content">Archive</div>
+                        <div class="visible content">
+                            <i class="archive icon"></i>
+                        </div>
                     </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td>Daniel Gravel</td>
-            <td>SE</td>
-        </tr>
-        <tr>
-            <td>Bhavik Tailor</td>
-            <td>SE</td>
-        </tr>
-        <tr>
-            <td>Tanzim Zaman</td>
-            <td>SE</td>
-        </tr>
+                </td>
+            </tr>
+            <tr>
+                <td>Daniel Gravel</td>
+                <td>SE</td>
+            </tr>
+            <tr>
+                <td>Bhavik Tailor</td>
+                <td>SE</td>
+            </tr>
+            <tr>
+                <td>Tanzim Zaman</td>
+                <td>SE</td>
+            </tr>
+        </div>
+        <div th:if="${not #lists.isEmpty(projects)}">
+            <tr th:each="project: ${projects}">
+                <td rowspan="1" th:text="${project.id}"></td>
+                <td rowspan="1" th:text="${project.projectName}"></td>
+                <td rowspan="1">SE</td>
+                <td>Alexandre Cournoyer</td>
+                <td>SE</td>
+                <td rowspan="1">
+                    <div class="ui vertical animated blue button" tabindex="0">
+                        <div class="hidden content">Edit</div>
+                        <div class="visible content">
+                            <i class="edit icon"></i>
+                        </div>
+                    </div>
+                </td>
+                <td rowspan="1">
+                    <div class="ui vertical animated red button" tabindex="0">
+                        <div class="hidden content">Archive</div>
+                        <div class="visible content">
+                            <i class="archive icon"></i>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </div>
         </tbody>
         <tfoot class="full-width">
         <tfoot class="full-width">
         <tr>
             <th colspan="7">
                 <div class="ui floated small primary labeled icon button">
-                    <i class="user icon"></i> Add Project
+                    <i class="user icon"></i><a href="/addproject">Add Project</a>
                 </div>
             </th>
         </tr>

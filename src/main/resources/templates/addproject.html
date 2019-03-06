@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Project From</title>
+</head>
+<body>
+<h1>Add New Project</h1>
+<form action="#" th:action="@{/addproject}" th:object="${project}" method="post">
+    Project Name:
+    <input id="projectNameBox" type="text" th:field="*{projectName}">
+    <br><br>
+    Project Description:
+        <textarea rows="10" cols="30" id="projectDescriptionBox" type="text" th:field="*{description}" >
+            Enter Project Description
+        </textarea>
+    <br><br>
+    Min Number Of Students:
+    <input id="minNumberOfStudentsBox" type="text" th:field="*{minNumberOfStudents}" />
+    <br><br>
+    Max Number Of Students:
+    <input id="maxNumberOfStudentsBox" type="text" th:field="*{maxNumberOfStudents}" />
+    <br><br>
+    <p><input type="submit" value="Add Project" /></p>
+</form>
+</body>
+</html>
