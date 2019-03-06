@@ -23,14 +23,19 @@ This project is a web application to manage 4th year engineering capstone projec
 
 
 # ER Diagram
---> This needs to be generated
+![alt text](https://i.imgur.com/L9Tu5pQ.jpg)
 
 
-# Milestone 1 PR work summary
+# Current Status
 - The base project has been deployed on Heroku
 - The Github repository has been connected with Travis CI and Heroku
 - The entity classes for the projects and users have been created
 - A MySql server has been set up on the Heroku server
-- The basic home view is working
+- The basic home view is working with static deadlines, announcement, and projects pages
 - The basic professor view is working
-- The professor controller can add new projects and edit existing projects
+- The professor controller can add new projects
+- Prifessor view can display all the projects that were added
+
+
+# Sprint [Mar 6 - Mar 13]
+- 
