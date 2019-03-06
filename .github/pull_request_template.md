@@ -34,3 +34,11 @@ Create issue for known issues and link them in the pull request
 Closes [Issue Number]
 
 ## Screenshots (if applicable)
+Include screenshots of the front-end changes that were made
+
+## Must Do Before Approving
+_Put an `x` in the boxes that apply.
+- [ ] Review the code changes and check for code smells and or make comments if needed
+
+Put an `x` in the box below if you need the reviewer to double check the front-end changes you made
+- [ ] Tophat Needed (Steps: checkout the branch and run the application locally to determine if the front-end change looks the same as in this PR)
