@@ -1,5 +1,6 @@
 package com.eggplant.emoji.entities;
 
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -14,6 +15,7 @@ public class JPATests {
     @Test
     public void testDefaultUserJPA() {
         User defaultUser = new User();
+        defaultUser.setMemberId(User.DEFAULT_MEMBER_ID);
 
         // Connect to the DB through the EntityManagerFactory using details found in persistence.xml
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
@@ -23,10 +25,9 @@ public class JPATests {
         em.persist(defaultUser);
         tx.commit();
 
-        Query q = em.createQuery("SELECT u FROM User u");
+        Query q = em.createQuery("SELECT u FROM User u WHERE u.memberId = " + User.DEFAULT_MEMBER_ID);
         @SuppressWarnings("unchecked")
         List<User> results = q.getResultList();
-
         assertEquals(1, results.size());
         assertEquals(User.DEFAULT_FIRST_NAME, results.get(0).getFirstName());
         assertEquals(User.DEFAULT_LAST_NAME, results.get(0).getLastName());
@@ -34,6 +35,10 @@ public class JPATests {
         assertEquals(User.DEFAULT_EMAIL, results.get(0).getEmail());
         assertEquals(User.Role.STUDENT, results.get(0).getRole());
         assertEquals(User.Program.SOFTWARE, results.get(0).getProgram());
+
+        tx.begin();
+        em.remove(defaultUser);
+        tx.commit();
 
         // Close the connection
         em.close();
@@ -60,20 +65,28 @@ public class JPATests {
         em.persist(dummyProject);
         tx.commit();
 
-        Query q = em.createQuery("SELECT p FROM Project p");
+        Query q = em.createQuery("SELECT p FROM Project p WHERE p.projectName = '"+ Project.DEFAULT_PROJECT_NAME +"'");
         @SuppressWarnings("unchecked")
         List<Project> results = q.getResultList();
         assertEquals(1, results.size());
         dummyProject = results.get(0);
-        assertEquals(dummyProject.getProjectName(), Project.DEFAULT_PROJECT_NAME);
-        assertEquals(dummyProject.getDescription(), Project.DEFAULT_PROJECT_DESCRIPTION);
-        assertEquals(dummyProject.getStudents().size(), 4);
+        assertEquals(Project.DEFAULT_PROJECT_NAME, dummyProject.getProjectName());
+        assertEquals(Project.DEFAULT_PROJECT_DESCRIPTION, dummyProject.getDescription());
+        assertEquals(4, dummyProject.getStudents().size());
 
         List<String> studentFirstNames = dummyProject.getStudents().stream().map((student) -> student.getFirstName()).collect(Collectors.toList());
         assertTrue(studentFirstNames.contains("Arun"));
         assertTrue(studentFirstNames.contains("Blessing"));
         assertTrue(studentFirstNames.contains("Shasthra"));
         assertTrue(studentFirstNames.contains("Sean"));
+
+        tx.begin();
+        em.remove(student1);
+        em.remove(student2);
+        em.remove(student3);
+        em.remove(student4);
+        em.remove(dummyProject);
+        tx.commit();
 
         // Close the connection
         em.close();
