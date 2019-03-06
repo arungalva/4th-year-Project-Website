@@ -38,4 +38,10 @@ This project is a web application to manage 4th year engineering capstone projec
 
 
 # Sprint [Mar 6 - Mar 13]
-- 
+- Switch from entity mangers to repositories
+- Unit tests to ensure successful deployment
+- Base Student view
+- Students need to be able to join projects
+- Home project view should display all added projects
+- Adding a new projects needs to have the option to add program restrictions
+- Edit Projects
