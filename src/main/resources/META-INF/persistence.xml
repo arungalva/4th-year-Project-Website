@@ -6,9 +6,9 @@
         <class>com.eggplant.emoji.entities.User</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/sysc4806" />
-            <property name="javax.persistence.jdbc.user" value="eggplant" />
-            <property name="javax.persistence.jdbc.password" value="emoji" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://us-cdbr-iron-east-03.cleardb.net:3306/heroku_29bdee14ebe81e6?reconnect=true" />
+            <property name="javax.persistence.jdbc.user" value="b208ab0380c202" />
+            <property name="javax.persistence.jdbc.password" value="69254c69" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="database" />
         </properties>
