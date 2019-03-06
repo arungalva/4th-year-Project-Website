@@ -27,13 +27,13 @@ public class JPATests {
         @SuppressWarnings("unchecked")
         List<User> results = q.getResultList();
 
-        assertEquals(results.size(), 1);
-        assertEquals(results.get(0).getFirstName(), User.DEFAULT_FIRST_NAME);
-        assertEquals(results.get(0).getLastName(), User.DEFAULT_LAST_NAME);
-        assertEquals(results.get(0).getMemberId(), User.DEFAULT_MEMBER_ID);
-        assertEquals(results.get(0).getEmail(), User.DEFAULT_EMAIL);
-        assertEquals(results.get(0).getRole(), User.Role.STUDENT);
-        assertEquals(results.get(0).getProgram(), User.Program.SOFTWARE);
+        assertEquals(1, results.size());
+        assertEquals(User.DEFAULT_FIRST_NAME, results.get(0).getFirstName());
+        assertEquals(User.DEFAULT_LAST_NAME, results.get(0).getLastName());
+        assertEquals(User.DEFAULT_MEMBER_ID, results.get(0).getMemberId());
+        assertEquals(User.DEFAULT_EMAIL, results.get(0).getEmail());
+        assertEquals(User.Role.STUDENT, results.get(0).getRole());
+        assertEquals(User.Program.SOFTWARE, results.get(0).getProgram());
 
         // Close the connection
         em.close();
@@ -63,8 +63,7 @@ public class JPATests {
         Query q = em.createQuery("SELECT p FROM Project p");
         @SuppressWarnings("unchecked")
         List<Project> results = q.getResultList();
-
-        assertEquals(results.size(), 1);
+        assertEquals(1, results.size());
         dummyProject = results.get(0);
         assertEquals(dummyProject.getProjectName(), Project.DEFAULT_PROJECT_NAME);
         assertEquals(dummyProject.getDescription(), Project.DEFAULT_PROJECT_DESCRIPTION);

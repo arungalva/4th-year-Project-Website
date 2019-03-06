@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 import com.eggplant.emoji.entities.User.Program;
 
 @Entity
-public class Project extends Auditable<String>{
+public class Project extends Auditable<String> {
     public static final String DEFAULT_PROJECT_NAME = "Dummy Project";
     public static final String DEFAULT_PROJECT_DESCRIPTION = "Dummy Project Description";
     public static final int MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT = 2;

@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Entity
-public class User extends Auditable<String>{
+public class User extends Auditable<String> {
     public static final int DEFAULT_MEMBER_ID = 100100100;
     public static final String DEFAULT_FIRST_NAME = "John";
     public static final String DEFAULT_LAST_NAME = "Doe";
