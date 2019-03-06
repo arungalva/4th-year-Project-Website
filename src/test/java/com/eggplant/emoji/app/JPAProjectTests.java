@@ -92,7 +92,6 @@ public class JPAProjectTests {
         @SuppressWarnings("unchecked")
         List<Project> projects = (List<Project>) modelAndView.getModel().get("projects");
         assertEquals(1, projects.size());
-        assertEquals(1L, projects.get(0).getId().longValue());
         assertEquals("Test Project", projects.get(0).getProjectName());
         assertEquals("Test Project Description", projects.get(0).getDescription());
         assertEquals(2, projects.get(0).getMinNumberOfStudents());

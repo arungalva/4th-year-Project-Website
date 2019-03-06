@@ -1,5 +1,6 @@
 package com.eggplant.emoji.entities;
 
+import org.junit.After;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,6 +11,37 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class JPATests {
+
+    /**
+     * Used to clear all the project and user entities added in the test cases
+     * This is done so that later tests can be performed with empty tables
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        Query projectQuery = em.createQuery("SELECT p FROM Project p");
+        @SuppressWarnings("unchecked")
+        List<Project> projectResults = projectQuery.getResultList();
+
+        Query userQuery = em.createQuery("SELECT u FROM User u");
+        @SuppressWarnings("unchecked")
+        List<User> userResults = userQuery.getResultList();
+
+        tx.begin();
+        for(Project project : projectResults){
+            em.remove(project);
+        }
+        for(User user : userResults){
+            em.remove(user);
+        }
+        tx.commit();
+        tx.begin();
+        em.clear();
+        tx.commit();
+    }
 
     @Test
     public void testDefaultUserJPA() {
