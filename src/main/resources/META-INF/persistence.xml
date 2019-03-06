@@ -9,7 +9,7 @@
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/sysc4806" />
             <property name="javax.persistence.jdbc.user" value="eggplant" />
             <property name="javax.persistence.jdbc.password" value="emoji" />
-            <property name="eclipselink.ddl-generation" value="none" />
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="database" />
         </properties>
     </persistence-unit>
