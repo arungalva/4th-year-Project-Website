@@ -11,13 +11,13 @@ public class User extends Auditable<String> {
     public static final String DEFAULT_LAST_NAME = "Doe";
     public static final String DEFAULT_EMAIL = "john.doe@carleton.ca";
 
-    public enum Role {
+    enum Role {
         STUDENT,
         PROFESSER,
         COORDINATOR;
     }
 
-    public enum Program {
+    enum Program {
         BIOMEDICAL_ELECTRICAL,
         COMMUNICATION,
         COMPUTER_SYSTEMS,

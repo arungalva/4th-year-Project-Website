@@ -31,6 +31,11 @@ public class JPAProjectTests {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Used to clear all the project entities added in the test cases
+     * This is done so that later tests can be performed with an empty project table
+     * @throws Exception
+     */
     @After
     public void tearDown() throws Exception {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
@@ -49,6 +54,10 @@ public class JPAProjectTests {
         tx.commit();
     }
 
+    /**
+     * Tests if the appproject page loads correctly
+     * @throws Exception
+     */
     @Test
     public void addProjectLoads() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/addproject"))
@@ -62,6 +71,10 @@ public class JPAProjectTests {
 
     }
 
+    /**
+     * Sends a POST request with a new project and tests if that project was added to the database
+     * @throws Exception
+     */
     @Test
     public void addProject() throws Exception {
         MvcResult result = this.mockMvc.perform(post("/addproject")

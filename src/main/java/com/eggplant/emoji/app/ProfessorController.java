@@ -22,17 +22,32 @@ public class ProfessorController {
         this.entityManager = emf.createEntityManager();
     }
 
+    /**
+     * GET request that returns the professor view
+     * @return professor view
+     */
     @GetMapping("/professor")
     public String index(){
         return "professor";
     }
 
+    /**
+     * GET request that returns the addproject view used to add a new project
+     * @param model model used to hold the new object to be created
+     * @return addproject view used to create a new project
+     */
     @GetMapping("/addproject")
     public String getAddProject(Model model){
         model.addAttribute("project", new Project());
         return "addproject";
     }
 
+    /**
+     * Received POST requests and adds the received project object to the database
+     * @param project new project object to be added to DB
+     * @param model model used to send the list of projects to the view
+     * @return the professor view to display all the projects
+     */
     @PostMapping("/addproject")
     @Transactional
     public String addProject(@ModelAttribute Project project, Model model){
@@ -45,8 +60,6 @@ public class ProfessorController {
         @SuppressWarnings("unchecked")
         List<Project> results = q.getResultList();
         model.addAttribute("projects",results);
-
-        System.out.println(results);
         return "professor";
     }
 }
