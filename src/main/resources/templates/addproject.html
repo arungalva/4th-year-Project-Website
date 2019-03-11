@@ -4,8 +4,8 @@
 <head>
     <title>Add Project</title>
 
-    <link rel="stylesheet" type="text/css" href="vendor/semantic.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -14,7 +14,7 @@
 <div class="ui main container">
     <h1 class="ui header">Add New Project</h1>
 
-    <form class="ui form" th:action="@{/addproject}" th:object="${project}" method="post">
+    <form class="ui form" th:action="@{/project/add}" th:object="${project}" method="post">
         <div class="field">
             <label>Project Name</label>
             <input type="text" name="project-name" placeholder="Project Name" th:field="*{projectName}">
@@ -37,7 +37,7 @@
     </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-<script src="vendor/semantic.min.js"></script>
-<script src="js/custom.js"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script>
 </body>
 </html>
