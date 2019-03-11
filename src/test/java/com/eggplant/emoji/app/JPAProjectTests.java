@@ -38,7 +38,7 @@ public class JPAProjectTests {
      */
     @Test
     public void addProjectLoads() throws Exception {
-        MvcResult result = this.mockMvc.perform(get("/addproject"))
+        MvcResult result = this.mockMvc.perform(get("/project/add"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Add New Project")))
                 .andReturn();
@@ -55,7 +55,7 @@ public class JPAProjectTests {
      */
     @Test
     public void addProject() throws Exception {
-        MvcResult result = this.mockMvc.perform(post("/addproject")
+        MvcResult result = this.mockMvc.perform(post("/project/add")
                 .param("projectName","Test Project")
                 .param("description","Test Project Description")
                 .param("minNumberOfStudents","2")

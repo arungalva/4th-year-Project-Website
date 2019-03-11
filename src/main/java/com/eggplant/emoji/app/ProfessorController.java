@@ -37,7 +37,7 @@ public class ProfessorController {
      * @param model model used to hold the new object to be created
      * @return addproject view used to create a new project
      */
-    @GetMapping("/addproject")
+    @GetMapping("/project/add")
     public String getAddProject(Model model){
         model.addAttribute("project", new Project());
         return "addproject";
@@ -49,7 +49,7 @@ public class ProfessorController {
      * @param model model used to send the list of projects to the view
      * @return the professor view to display all the projects
      */
-    @PostMapping("/addproject")
+    @PostMapping("/project/add")
     @Transactional
     public String addProject(@ModelAttribute Project project, Model model){
         EntityTransaction tx = entityManager.getTransaction();
