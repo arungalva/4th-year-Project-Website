@@ -48,6 +48,7 @@ public class JPATests {
     @Test
     public void testProjectJPA() {
         Project dummyProject = new Project();
+        dummyProject.setProjectName("Test Project");
         User student1 = new User(100100100, User.Role.STUDENT, "Arun", "Galva", "mynamearun@carleton.ca", User.Program.SOFTWARE);
         User student2 = new User(100100101, User.Role.STUDENT, "Blessing", "Omotayo", "titilope@carleton.ca", User.Program.SOFTWARE);
         User student3 = new User(100100102, User.Role.STUDENT, "Shasthra", "Longlastname", "shasthra@carleton.ca", User.Program.SOFTWARE);
@@ -65,12 +66,12 @@ public class JPATests {
         em.persist(dummyProject);
         tx.commit();
 
-        Query q = em.createQuery("SELECT p FROM Project p WHERE p.projectName = '"+ Project.DEFAULT_PROJECT_NAME +"'");
+        Query q = em.createQuery("SELECT p FROM Project p WHERE p.projectName = 'Test Project'");
         @SuppressWarnings("unchecked")
         List<Project> results = q.getResultList();
         assertEquals(1, results.size());
         dummyProject = results.get(0);
-        assertEquals(Project.DEFAULT_PROJECT_NAME, dummyProject.getProjectName());
+        assertEquals("Test Project", dummyProject.getProjectName());
         assertEquals(Project.DEFAULT_PROJECT_DESCRIPTION, dummyProject.getDescription());
         assertEquals(4, dummyProject.getStudents().size());
 
