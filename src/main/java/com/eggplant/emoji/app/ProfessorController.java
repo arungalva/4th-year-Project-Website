@@ -27,7 +27,8 @@ public class ProfessorController {
      * @return professor view
      */
     @GetMapping("/professor")
-    public String index(){
+    public String index(Model model){
+        model.addAttribute("projects",getAllProjects());
         return "professor";
     }
 
@@ -56,10 +57,14 @@ public class ProfessorController {
         entityManager.persist(project);
         tx.commit();
 
+        model.addAttribute("projects",getAllProjects());
+        return "professor";
+    }
+
+    private List<Project> getAllProjects(){
         Query q = entityManager.createQuery("SELECT p FROM Project p");
         @SuppressWarnings("unchecked")
         List<Project> results = q.getResultList();
-        model.addAttribute("projects",results);
-        return "professor";
+        return results;
     }
 }
