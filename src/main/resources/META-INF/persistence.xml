@@ -5,10 +5,8 @@
         <class>com.eggplant.emoji.entities.Project</class>
         <class>com.eggplant.emoji.entities.User</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/sysc4806" />
-            <property name="javax.persistence.jdbc.user" value="eggplant" />
-            <property name="javax.persistence.jdbc.password" value="emoji" />
+            <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:sample.db" />
             <property name="eclipselink.ddl-generation" value="create-tables" />
             <property name="eclipselink.ddl-generation.output-mode" value="database" />
         </properties>
