@@ -102,8 +102,8 @@ public class JPAProjectTests {
      */
     @Test
     public void getProjects() throws Exception {
-        // add a test project throught the add projects page
-        this.mockMvc.perform(post("/addproject")
+        // add a test project through out the add projects page
+        this.mockMvc.perform(post("/project/add")
                 .param("projectName","Test Project")
                 .param("description","Test Project Description")
                 .param("minNumberOfStudents","2")
