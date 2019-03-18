@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <title>4th-Year-Project-Home-Page</title>
 
-    <link rel="stylesheet" type="text/css" href="vendor/semantic.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -13,7 +14,7 @@
 
 <div class="ui inverted vertical masthead center aligned segment" id="dropdownsection">
     <div class="ui text container">
-        <img class="centerlogo" src="assets/images/white_carleton_logo.svg">
+        <img class="centerlogo" src="/assets/images/white_carleton_logo.svg">
         <h1 class="ui inverted header">
             Welcome to SYSC 4907 - Engineering Project
         </h1>
@@ -28,6 +29,6 @@
     </a>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
-<script src="js/custom.js"></script>
+<script src="/js/custom.js"></script>
 </body>
 </html>
