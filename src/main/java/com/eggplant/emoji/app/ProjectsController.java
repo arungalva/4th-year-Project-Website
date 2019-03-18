@@ -27,16 +27,16 @@ public class ProjectsController {
      */
     @GetMapping("/projects")
     public String index(Model model){
-        model.addAttribute("projects", getAllProjects());
+        model.addAttribute("projects", getAllNonArchivedProjects());
         return "projects";
     }
 
     /**
-     * Returns all the projects in the database
-     * @return list of all the projects in the database
+     * Returns all the projects in the database that are not archived
+     * @return list of all the projects in the database that are not archived
      */
-    private List<Project> getAllProjects(){
-        Query q = entityManager.createQuery("SELECT p FROM Project p");
+    private List<Project> getAllNonArchivedProjects(){
+        Query q = entityManager.createQuery("SELECT p FROM Project p WHERE p.archivedDate = NULL");
         @SuppressWarnings("unchecked")
         List<Project> results = q.getResultList();
         return results;

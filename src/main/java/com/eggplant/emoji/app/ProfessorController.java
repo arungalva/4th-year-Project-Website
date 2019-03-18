@@ -1,15 +1,16 @@
 package com.eggplant.emoji.app;
 
 import com.eggplant.emoji.entities.Project;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -28,8 +29,46 @@ public class ProfessorController {
      */
     @GetMapping("/professor")
     public String index(Model model){
-        model.addAttribute("projects",getAllProjects());
+        model.addAttribute("projects",getAllNonArchivedProjects());
         return "professor";
+    }
+
+    /**
+     * GET request that returns the archived projects
+     * @return archived Project view
+     */
+    @GetMapping("/archivedProjects")
+    public String archivedProjects(Model model){
+
+        model.addAttribute("projects",getAllArchivedProjects());
+        return "archivedProjects";
+    }
+
+    /**
+     * Received POST requests and calls archivedProject() on the project that was clicked
+     * @param request HttpServletRequest request from the input field
+     * @param model model used to send the list of projects to the view
+     * @return the professor view to display all the non archived projects
+     */
+    @PostMapping("/archive")
+    @Transactional
+    public RedirectView archiveProject(HttpServletRequest request, Model model){
+        Long id = Long.parseLong(request.getParameter("id"));
+
+        Query q = entityManager.createQuery("SELECT p FROM Project p WHERE p.id = :id");
+        q.setParameter("id", id);
+        @SuppressWarnings("unchecked")
+        List<Project> results = q.getResultList();
+        Project project = results.get(0);
+
+        project.archiveProject();
+
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
+        entityManager.persist(project);
+        tx.commit();
+
+        return new RedirectView("/professor");
     }
 
     /**
@@ -57,12 +96,19 @@ public class ProfessorController {
         entityManager.persist(project);
         tx.commit();
 
-        model.addAttribute("projects",getAllProjects());
+        model.addAttribute("projects",getAllNonArchivedProjects());
         return "professor";
     }
 
-    private List<Project> getAllProjects(){
-        Query q = entityManager.createQuery("SELECT p FROM Project p");
+    private List<Project> getAllArchivedProjects(){
+        Query q = entityManager.createQuery("SELECT p FROM Project p WHERE p.archivedDate != NULL");
+        @SuppressWarnings("unchecked")
+        List<Project> results = q.getResultList();
+        return results;
+    }
+
+    private List<Project> getAllNonArchivedProjects(){
+        Query q = entityManager.createQuery("SELECT p FROM Project p WHERE p.archivedDate = NULL");
         @SuppressWarnings("unchecked")
         List<Project> results = q.getResultList();
         return results;

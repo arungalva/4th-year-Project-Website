@@ -1,6 +1,7 @@
 package com.eggplant.emoji.entities;
 
 import java.util.EnumSet;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.*;
@@ -38,6 +39,9 @@ public class Project extends Auditable<String> {
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     private List<User> students;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date archivedDate;
+
 
     public Project() {
         this(DEFAULT_PROJECT_NAME, DEFAULT_PROJECT_DESCRIPTION, MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, EnumSet.allOf(Program.class));
@@ -50,6 +54,7 @@ public class Project extends Auditable<String> {
         this.maxNumberOfStudents = maxNumberOfStudents;
         this.programRestrictions = programRestrictions;
         this.students = new ArrayList<User>();
+        this.archivedDate = null;
     }
 
     public Long getId() { return this.id; }
@@ -72,6 +77,9 @@ public class Project extends Auditable<String> {
 
     public EnumSet<Program> getProgramRestrictions() { return this.programRestrictions; }
     public void setProgramRestrictions(EnumSet<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
+
+    public Date getArchivedDate() { return this.archivedDate; }
+    public void setArchivedDate(Date date) { this.archivedDate = date; }
 
     public boolean addStudent(User student) {
         if (this.students.contains(student)) {
@@ -97,6 +105,11 @@ public class Project extends Auditable<String> {
         }
         return false;
     }
+
+    public void archiveProject() {
+        this.archivedDate = new Date();
+    }
+
 
     @Override
     public String toString() {

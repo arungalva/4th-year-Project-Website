@@ -2,7 +2,6 @@ package com.eggplant.emoji.app;
 
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.entities.User;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ModelAndView;
+
+import org.hamcrest.Matchers;
+
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,7 +35,7 @@ public class JPAProjectTests {
     private MockMvc mockMvc;
 
     /**
-     * Tests if the appproject page loads correctly
+     * Tests if the /project/add page loads correctly
      * @throws Exception
      */
     @Test
@@ -146,5 +148,22 @@ public class JPAProjectTests {
 
         em.close();
         emf.close();
+    }
+
+    /**
+     * Tests if the archivedProjects page loads correctly
+     * @throws Exception
+     */
+    @Test
+    public void archivedProjectsPage() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/archivedProjects"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Matchers.containsString("All Archived projects")))
+                .andReturn();
+        ModelAndView modelAndView = result.getModelAndView();
+        assertNotNull(modelAndView);
+        assertNotNull(modelAndView.getViewName());
+        assertEquals("archivedProjects", modelAndView.getViewName());
+
     }
 }
