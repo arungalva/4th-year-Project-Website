@@ -23,9 +23,4 @@ public class HomeController {
         return "notices";
     }
 
-    @GetMapping("/projects")
-    public String projects() {
-        return "projects";
-    }
-
 }
