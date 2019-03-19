@@ -7,6 +7,6 @@ deploy:
     secure: $HEROKU_API_KEY
   app: eggplant-emoji
 services:
-  - mysql
+  - postgresql
 before_install:
-  - mysql -u root --password="" < testDBSetup.sql
+  - psql -u root --password="" < testDBSetup.sql
