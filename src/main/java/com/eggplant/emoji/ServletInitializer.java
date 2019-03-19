@@ -1,4 +1,4 @@
-package com.eggplant.emoji.app;
+package com.eggplant.emoji;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
