@@ -32,7 +32,8 @@ public class Project extends Auditable<String> {
     @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     private int maxNumberOfStudents;
-    @NotNull
+    //Todo: Change ProgramRestrictions to use entities or @enumerated because the EnumSet doesn't work currently
+//    @NotNull
     private EnumSet<Program> programRestrictions;
     @NotNull
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
@@ -48,7 +49,7 @@ public class Project extends Auditable<String> {
         this.description = description;
         this.minNumberOfStudents = minNumberOfStudents;
         this.maxNumberOfStudents = maxNumberOfStudents;
-        this.programRestrictions = programRestrictions;
+//        this.programRestrictions = programRestrictions;
         this.students = new ArrayList<User>();
     }
 

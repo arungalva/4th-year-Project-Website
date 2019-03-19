@@ -1,8 +1,7 @@
-package com.eggplant.emoji.app;
+package com.eggplant.emoji.controller;
 
 import com.eggplant.emoji.entities.Project;
-import com.eggplant.emoji.entities.User;
-import org.junit.After;
+import com.eggplant.emoji.service.ProjectService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,9 @@ public class JPAProjectTests {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ProjectService projectService;
 
     /**
      * Tests if the appproject page loads correctly
@@ -67,33 +69,30 @@ public class JPAProjectTests {
         assertNotNull(modelAndView);
         assertNotNull(modelAndView.getViewName());
         assertEquals("professor", modelAndView.getViewName());
-        @SuppressWarnings("unchecked")
-        List<Project> projects = (List<Project>) modelAndView.getModel().get("projects");
-        Project projectExp = null;
-        for(Project project : projects){
-            if(project.getProjectName().equals("Test Project")){
-                projectExp = project;
-            }
-        }
-        assertNotNull(projectExp);
-        assertEquals("Test Project", projectExp.getProjectName());
-        assertEquals("Test Project Description", projectExp.getDescription());
-        assertEquals(2, projectExp.getMinNumberOfStudents());
-        assertEquals(5, projectExp.getMaxNumberOfStudents());
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        Query q = em.createQuery("SELECT p FROM Project p WHERE p.projectName = 'Test Project'");
-        @SuppressWarnings("unchecked")
-        List<Project> results = q.getResultList();
-        assertEquals(1, results.size());
-        tx.begin();
-        em.remove(results.get(0));
-        tx.commit();
+        Project addedProject = this.projectService.getProjectByName("Test Project");
+        assertNotNull(addedProject);
+        assertEquals("Test Project", addedProject.getProjectName());
+        assertEquals("Test Project Description", addedProject.getDescription());
+        assertEquals(2, addedProject.getMinNumberOfStudents());
+        assertEquals(5, addedProject.getMaxNumberOfStudents());
 
-        em.close();
-        emf.close();
+        // clean up the project we just created
+//        this.projectService.removeProjectByName("Test Project");
+
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
+//        EntityManager em = emf.createEntityManager();
+//        EntityTransaction tx = em.getTransaction();
+//        Query q = em.createQuery("SELECT p FROM Project p WHERE p.projectName = 'Test Project'");
+//        @SuppressWarnings("unchecked")
+//        List<Project> results = q.getResultList();
+//        assertEquals(1, results.size());
+//        tx.begin();
+//        em.remove(results.get(0));
+//        tx.commit();
+//
+//        em.close();
+//        emf.close();
     }
 
     /**
