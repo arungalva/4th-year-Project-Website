@@ -9,4 +9,4 @@ deploy:
 services:
   - postgresql
 before_install:
-  - psql -u root --password="" < testDBSetup.sql
+  - psql < testDBSetup.sql
