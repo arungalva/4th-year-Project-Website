@@ -1,6 +1,7 @@
-package com.eggplant.emoji.app;
+package com.eggplant.emoji.controller;
 
 import com.eggplant.emoji.entities.Project;
+import com.eggplant.emoji.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,12 +16,8 @@ import java.util.List;
 @Controller
 public class ProfessorController {
 
-    public final EntityManager entityManager;
-
-    public ProfessorController(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
-        this.entityManager = emf.createEntityManager();
-    }
+    @Autowired
+    private ProjectService projectService;
 
     /**
      * GET request that returns the professor view
@@ -28,7 +25,8 @@ public class ProfessorController {
      */
     @GetMapping("/professor")
     public String index(Model model){
-        model.addAttribute("projects",getAllProjects());
+        List<Project> projects = projectService.findAll();
+        model.addAttribute("projects",projects);
         return "professor";
     }
 
@@ -52,19 +50,10 @@ public class ProfessorController {
     @PostMapping("/project/add")
     @Transactional
     public String addProject(@ModelAttribute Project project, Model model){
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-        entityManager.persist(project);
-        tx.commit();
 
-        model.addAttribute("projects",getAllProjects());
+        projectService.addProject(project);
+        List<Project> projects = projectService.findAll();
+        model.addAttribute("projects",projects);
         return "professor";
-    }
-
-    private List<Project> getAllProjects(){
-        Query q = entityManager.createQuery("SELECT p FROM Project p");
-        @SuppressWarnings("unchecked")
-        List<Project> results = q.getResultList();
-        return results;
     }
 }
