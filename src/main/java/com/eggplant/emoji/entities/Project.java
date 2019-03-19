@@ -8,8 +8,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import com.eggplant.emoji.entities.User.Program;
-
 @Entity
 public class Project extends Auditable<String> {
     public static final String DEFAULT_PROJECT_NAME = "Dummy Project";
@@ -34,17 +32,17 @@ public class Project extends Auditable<String> {
     private int maxNumberOfStudents;
     //Todo: Change ProgramRestrictions to use entities or @enumerated because the EnumSet doesn't work currently
 //    @NotNull
-    private EnumSet<Program> programRestrictions;
+//    private EnumSet<Program> programRestrictions;
     @NotNull
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     private List<User> students;
 
 
     public Project() {
-        this(DEFAULT_PROJECT_NAME, DEFAULT_PROJECT_DESCRIPTION, MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, EnumSet.allOf(Program.class));
+        this(DEFAULT_PROJECT_NAME, DEFAULT_PROJECT_DESCRIPTION, MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT);
     }
 
-    public Project(String projectName, String description, int minNumberOfStudents, int maxNumberOfStudents, EnumSet<Program> programRestrictions) {
+    public Project(String projectName, String description, int minNumberOfStudents, int maxNumberOfStudents) {
         this.projectName = projectName;
         this.description = description;
         this.minNumberOfStudents = minNumberOfStudents;
@@ -71,22 +69,22 @@ public class Project extends Auditable<String> {
     public List<User> getStudents() { return this.students; }
     public void setStudents(List<User> students) { this.students = students; }
 
-    public EnumSet<Program> getProgramRestrictions() { return this.programRestrictions; }
-    public void setProgramRestrictions(EnumSet<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
+//    public EnumSet<Program> getProgramRestrictions() { return this.programRestrictions; }
+//    public void setProgramRestrictions(EnumSet<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
 
     public boolean addStudent(User student) {
         if (this.students.contains(student)) {
             return false;
         }
-        if (student.getRole() != User.Role.STUDENT) {
-            return false;
-        }
+//        if (student.getRole() != User.Role.STUDENT) {
+//            return false;
+//        }
         if (this.students.size() == this.maxNumberOfStudents) {
             return false;
         }
-        if (!this.programRestrictions.contains(student.getProgram())) {
-            return false;
-        }
+//        if (!this.programRestrictions.contains(student.getProgram())) {
+//            return false;
+//        }
         this.students.add(student);
         return true;
     }

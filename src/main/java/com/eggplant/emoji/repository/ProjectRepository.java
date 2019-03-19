@@ -11,7 +11,9 @@ import java.util.Date;
 
 public interface ProjectRepository extends CrudRepository<Project, Long> {
     Project findByProjectName(String projectName);
-    void deleteProjectByProjectName(String projectName);
 
+    @Modifying
+    @Transactional
+    void deleteProjectByProjectName(String projectName);
 
 }

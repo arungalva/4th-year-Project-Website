@@ -2,8 +2,8 @@ package com.eggplant.emoji;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
-// hello
 @SpringBootApplication
 public class AppApplication {
 

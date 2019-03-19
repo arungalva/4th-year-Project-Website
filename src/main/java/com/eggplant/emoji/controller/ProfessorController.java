@@ -64,7 +64,6 @@ public class ProfessorController {
     private List<Project> getAllProjects(){
 
         List<Project> projects = projectService.findAll();
-        System.out.println(projects);
         return projects;
     }
 }

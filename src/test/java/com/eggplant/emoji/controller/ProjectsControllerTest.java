@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class JPAProjectTests {
+public class ProjectsControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -77,22 +77,9 @@ public class JPAProjectTests {
         assertEquals(2, addedProject.getMinNumberOfStudents());
         assertEquals(5, addedProject.getMaxNumberOfStudents());
 
-        // clean up the project we just created
-//        this.projectService.removeProjectByName("Test Project");
+        //remove the project that we tested
+        this.projectService.removeProjectByName("Test Project");
 
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
-//        EntityManager em = emf.createEntityManager();
-//        EntityTransaction tx = em.getTransaction();
-//        Query q = em.createQuery("SELECT p FROM Project p WHERE p.projectName = 'Test Project'");
-//        @SuppressWarnings("unchecked")
-//        List<Project> results = q.getResultList();
-//        assertEquals(1, results.size());
-//        tx.begin();
-//        em.remove(results.get(0));
-//        tx.commit();
-//
-//        em.close();
-//        emf.close();
     }
 
     /**
@@ -100,10 +87,10 @@ public class JPAProjectTests {
      * @throws Exception
      */
     @Test
-    public void getProjects() throws Exception {
+    public void getProject() throws Exception {
         // add a test project through out the add projects page
         this.mockMvc.perform(post("/project/add")
-                .param("projectName","Test Project")
+                .param("projectName","Test Project for get projects test")
                 .param("description","Test Project Description")
                 .param("minNumberOfStudents","2")
                 .param("maxNumberOfStudents","5"))
@@ -118,32 +105,15 @@ public class JPAProjectTests {
         ModelAndView modelAndView = result.getModelAndView();
         assertNotNull(modelAndView);
         assertNotNull(modelAndView.getViewName());
-        @SuppressWarnings("unchecked")
-        List<Project> projects = (List<Project>) modelAndView.getModel().get("projects");
-        Project projectExp = null;
-        for(Project project : projects){
-            if(project.getProjectName().equals("Test Project")){
-                projectExp = project;
-            }
-        }
+
+        Project projectExp = this.projectService.getProjectByName("Test Project for get projects test");
+
         assertNotNull(projectExp);
-        assertEquals("Test Project", projectExp.getProjectName());
+        assertEquals("Test Project for get projects test", projectExp.getProjectName());
         assertEquals("Test Project Description", projectExp.getDescription());
         assertEquals(2, projectExp.getMinNumberOfStudents());
         assertEquals(5, projectExp.getMaxNumberOfStudents());
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        Query q = em.createQuery("SELECT p FROM Project p WHERE p.projectName = 'Test Project'");
-        @SuppressWarnings("unchecked")
-        List<Project> results = q.getResultList();
-        assertEquals(1, results.size());
-        tx.begin();
-        em.remove(results.get(0));
-        tx.commit();
-
-        em.close();
-        emf.close();
+        this.projectService.removeProjectByName("Test Project for get projects test");
     }
 }
