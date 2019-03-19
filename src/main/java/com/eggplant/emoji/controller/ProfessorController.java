@@ -19,18 +19,14 @@ public class ProfessorController {
     @Autowired
     private ProjectService projectService;
 
-    public ProfessorController(){
-
-    }
-
     /**
      * GET request that returns the professor view
      * @return professor view
      */
     @GetMapping("/professor")
     public String index(Model model){
-
-        model.addAttribute("projects",getAllProjects());
+        List<Project> projects = projectService.findAll();
+        model.addAttribute("projects",projects);
         return "professor";
     }
 
@@ -56,14 +52,8 @@ public class ProfessorController {
     public String addProject(@ModelAttribute Project project, Model model){
 
         projectService.addProject(project);
-
-        model.addAttribute("projects",getAllProjects());
-        return "professor";
-    }
-
-    private List<Project> getAllProjects(){
-
         List<Project> projects = projectService.findAll();
-        return projects;
+        model.addAttribute("projects",projects);
+        return "professor";
     }
 }

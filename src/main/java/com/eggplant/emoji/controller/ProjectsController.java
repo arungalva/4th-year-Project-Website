@@ -24,16 +24,8 @@ public class ProjectsController {
      */
     @GetMapping("/projects")
     public String index(Model model){
-        model.addAttribute("projects", getAllProjects());
+        List<Project> allProjects = this.projectService.findAll();
+        model.addAttribute("projects", allProjects);
         return "projects";
-    }
-
-    /**
-     * Returns all the projects in the database
-     * @return list of all the projects in the database
-     */
-    private List<Project> getAllProjects(){
-        List<Project> projects = this.projectService.findAll();
-        return projects;
     }
 }

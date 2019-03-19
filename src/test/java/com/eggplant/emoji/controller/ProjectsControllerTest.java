@@ -58,27 +58,27 @@ public class ProjectsControllerTest {
     @Test
     public void addProject() throws Exception {
         MvcResult result = this.mockMvc.perform(post("/project/add")
-                .param("projectName","Test Project")
+                .param("projectName","Test Project for add project")
                 .param("description","Test Project Description")
                 .param("minNumberOfStudents","2")
                 .param("maxNumberOfStudents","5"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Test Project")))
+                .andExpect(content().string(containsString("Test Project for add project")))
                 .andReturn();
         ModelAndView modelAndView = result.getModelAndView();
         assertNotNull(modelAndView);
         assertNotNull(modelAndView.getViewName());
         assertEquals("professor", modelAndView.getViewName());
 
-        Project addedProject = this.projectService.getProjectByName("Test Project");
+        Project addedProject = this.projectService.getProjectByName("Test Project for add project");
         assertNotNull(addedProject);
-        assertEquals("Test Project", addedProject.getProjectName());
+        assertEquals("Test Project for add project", addedProject.getProjectName());
         assertEquals("Test Project Description", addedProject.getDescription());
         assertEquals(2, addedProject.getMinNumberOfStudents());
         assertEquals(5, addedProject.getMaxNumberOfStudents());
 
         //remove the project that we tested
-        this.projectService.removeProjectByName("Test Project");
+        this.projectService.removeProjectByName("Test Project for add project");
 
     }
 
