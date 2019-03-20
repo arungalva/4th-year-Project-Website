@@ -38,12 +38,15 @@
                     </div>
                 </td>
                 <td rowspan="1">
-                    <div class="ui vertical animated red button" tabindex="0">
-                        <div class="hidden content">Archive</div>
-                        <div class="visible content">
-                            <i class="archive icon"></i>
-                        </div>
-                    </div>
+                    <form action="/archive" method="POST">
+                        <input name="id" type="hidden" th:value="${project.id}">
+                        <button type="submit" class="ui vertical animated red button" tabindex="0">
+                            <div class="hidden content">Archive</div>
+                            <div class="visible content">
+                                <i class="archive icon"></i>
+                            </div>
+                        </button>
+                    </form>
                 </td>
             </tr>
         </div>

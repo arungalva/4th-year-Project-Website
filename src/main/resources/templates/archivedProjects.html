@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>4th-Year-Project-archivedProjects</title>
+
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div th:insert="fragments/homeheader :: homeheader"></div>
+<div class="ui main container">
+    <div class="ui horizontal divider">
+        <i class="clipboard icon"></i>
+        All Archived projects
+    </div>
+    <table style="overflow-x:auto;" class="ui celled structured stackable table projects">
+        <thead>
+        <tr>
+            <th rowspan="2" class="left aligned">ID</th>
+            <th rowspan="2" class="left aligned">Title</th>
+            <th rowspan="2" class="left aligned">Program</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:if="${not #lists.isEmpty(projects)}">
+            <tr th:each="project: ${projects}">
+                <td rowspan="1" th:text="${project.id}"></td>
+                <td rowspan="1" th:text="${project.projectName}"></td>
+                <td rowspan="1">SE</td>
+            </tr>
+        </div>
+        </tbody>
+        <tfoot class="full-width">
+        <tfoot class="full-width">
+        </tfoot>
+        </tfoot>
+    </table>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script></body>
+</html>

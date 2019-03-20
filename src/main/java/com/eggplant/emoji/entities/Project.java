@@ -3,6 +3,7 @@ package com.eggplant.emoji.entities;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.EnumSet;
+import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -45,6 +46,9 @@ public class Project extends Auditable<String> {
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     private List<User> students;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date archivedDate;
+
 
     public Project() {
         this(DEFAULT_PROJECT_NAME, DEFAULT_PROJECT_DESCRIPTION, MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT, MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT);
@@ -56,6 +60,7 @@ public class Project extends Auditable<String> {
         this.minNumberOfStudents = minNumberOfStudents;
         this.maxNumberOfStudents = maxNumberOfStudents;
         this.students = new ArrayList<User>();
+        this.archivedDate = null;
     }
 
     public Long getId() { return this.id; }
@@ -78,6 +83,9 @@ public class Project extends Auditable<String> {
 
     public Set<Program> getProgramRestrictions() { return this.programRestrictions; }
     public void setProgramRestrictions(Set<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
+
+    public Date getArchivedDate() { return this.archivedDate; }
+    public void setArchivedDate(Date date) { this.archivedDate = date; }
 
     public boolean addStudent(User student) {
         if (this.students.contains(student)) {
@@ -103,6 +111,11 @@ public class Project extends Auditable<String> {
         }
         return false;
     }
+
+    public void archiveProject() {
+        this.archivedDate = new Date();
+    }
+
 
     @Override
     public String toString() {

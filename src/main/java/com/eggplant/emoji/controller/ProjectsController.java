@@ -24,8 +24,10 @@ public class ProjectsController {
      */
     @GetMapping("/projects")
     public String index(Model model){
-        List<Project> allProjects = this.projectService.findAll();
-        model.addAttribute("projects", allProjects);
+        List<Project> allProjects = projectService.getAllNonArchivedProjects();
+        model.addAttribute("projects",allProjects);
         return "projects";
     }
+
+
 }
