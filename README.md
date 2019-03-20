@@ -19,7 +19,8 @@ This project is a web application to manage 4th year engineering capstone projec
 
 
 # Model UML Class Diagram
---> This will be generated once our models are finalized
+![Model Class diagram](src/main/resources/static/assets/images/entity_uml.png)
+
 
 
 # ER Diagram
