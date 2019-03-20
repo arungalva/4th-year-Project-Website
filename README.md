@@ -13,7 +13,7 @@ This project is a web application to manage 4th year engineering capstone projec
 - The application will offer authentication to allow users to log in as students, professors, or coordinators.
 - In the student view, students will be able to register for projects.
 - Once already registered, students will be able to submit documents for their project through the student view.
-- In the professor view, professors will be able to add projects for students to register for.
+- In the professor view, professors will be able to add projects for students to register for, edit projects and archive them.
 - Professors will also be able to download documents submitted to the projects they have added.
 - Coordinators will be able to change deadlines for the different documents to be submitted, as well as send mass emails to students of a group or all students of all groups
 
@@ -30,18 +30,19 @@ This project is a web application to manage 4th year engineering capstone projec
 - The base project has been deployed on Heroku
 - The Github repository has been connected with Travis CI and Heroku
 - The entity classes for the projects and users have been created
-- A MySql server has been set up on the Heroku server
+- A ProstgreSQL server has been set up on the Heroku server
+- The application uses repositories to handle persistence
 - The basic home view is working with static deadlines, announcement, and projects pages
 - The basic professor view is working
 - The professor controller can add new projects
-- Prifessor view can display all the projects that were added
+- The professor controller can edit existing projects
+- The professor controller can archive existing projects
+- Professor view can display all the projects that were added and not archived
+- Projects view can display all the projects that were added and not archived
 
 
-# Sprint [Mar 6 - Mar 13]
-- Switch from entity mangers to repositories
-- Unit tests to ensure successful deployment
-- Base Student view
-- Students need to be able to join projects
-- Home project view should display all added projects
-- Adding a new projects needs to have the option to add program restrictions
-- Edit Projects
+# Sprint [Mar 20 - Mar 27]
+- [ ] Registration
+- [ ] Sign in
+- [ ] Authorization
+- [ ] Student view
