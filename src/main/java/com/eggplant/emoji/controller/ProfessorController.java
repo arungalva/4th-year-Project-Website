@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.EnumSet;
@@ -86,13 +87,11 @@ public class ProfessorController {
      */
     @PostMapping("/project/add")
     @Transactional
-    public String postAddProject(@ModelAttribute Project project, Model model){
-
+    public RedirectView postAddProject(@ModelAttribute Project project, Model model){
         projectService.addProject(project);
-
         List<Project> allProjects = projectService.getAllNonArchivedProjects();
         model.addAttribute("projects",allProjects);
-        return "professor";
+        return new RedirectView("/professor");
     }
 
     /**
@@ -116,10 +115,10 @@ public class ProfessorController {
      */
     @PostMapping("/project/edit")
     @Transactional
-    public String postEditProject(@ModelAttribute Project project, Model model){
+    public RedirectView postEditProject(@ModelAttribute Project project, Model model){
         projectService.updateProject(project);
         List<Project> projects = projectService.findAll();
         model.addAttribute("projects",projects);
-        return "professor";
+        return new RedirectView("/professor");
     }
 }
