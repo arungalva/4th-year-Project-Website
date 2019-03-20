@@ -1,7 +1,6 @@
 package com.eggplant.emoji.service;
 
 import com.eggplant.emoji.entities.Project;
-import com.eggplant.emoji.entities.User;
 import com.eggplant.emoji.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +13,7 @@ public class ProjectService {
     private ProjectRepository repository;
 
     public List<Project> findAll() {
-        List<Project> projects = (List<Project>) repository.findAll();
+        List<Project> projects = (List<Project>) repository.findAllByOrderByIdAsc();
         return projects;
     }
 

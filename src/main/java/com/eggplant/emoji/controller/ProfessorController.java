@@ -7,9 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,12 +89,39 @@ public class ProfessorController {
      */
     @PostMapping("/project/add")
     @Transactional
-    public String addProject(@ModelAttribute Project project, Model model){
-
+    public ModelAndView postAddProject(@ModelAttribute Project project, Model model){
         projectService.addProject(project);
+        List<Project> projects = projectService.getAllNonArchivedProjects();
+        model.addAttribute("projects",projects);
+        return new ModelAndView("redirect:/professor", (ModelMap) model);
+    }
 
-        List<Project> allProjects = projectService.getAllNonArchivedProjects();
-        model.addAttribute("projects",allProjects);
-        return "professor";
+    /**
+     * GET request that returns the editproject view used to edit an existing project
+     * @param projectId id for the existing project object to be edited in the DB
+     * @param model model used to hold the new object to be created
+     * @return editproject view used to edit a project
+     */
+    @GetMapping("/project/edit")
+    public String getEditProject(@RequestParam("id") Long projectId, Model model){
+        Project existingProject = projectService.findById(projectId);
+        model.addAttribute("project", existingProject);
+        model.addAttribute("programs", EnumSet.allOf(Program.class));
+        return "editproject";
+    }
+
+    /**
+     * POST request that updates the received project object in the database
+     * @param project project object to be updated in the DB
+     * @param model model used to send the list of projects to the view
+     * @return the professor view to display all the projects
+     */
+    @PostMapping("/project/edit")
+    @Transactional
+    public RedirectView postEditProject(@ModelAttribute Project project, Model model){
+        projectService.updateProject(project);
+        List<Project> projects = projectService.findAll();
+        model.addAttribute("projects",projects);
+        return new RedirectView("/professor");
     }
 }
