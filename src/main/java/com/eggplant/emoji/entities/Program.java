@@ -10,8 +10,6 @@ public enum Program {
     private String programName;
     private String programCode;
 
-    Program(){}
-
     Program(String programName, String programCode) {
         this.programName = programName;
         this.programCode = programCode;
