@@ -1,15 +1,12 @@
 package com.eggplant.emoji.controller;
 
-import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.service.ProjectService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.util.collections.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -71,8 +68,7 @@ public class ProjectsControllerTest {
                 .param("programRestrictions", "BIOMEDICAL_ELECTRICAL",
                                                             "ELECTRICAL_ENGINEERING",
                                                             "COMPUTER_SYSTEMS_ENGINEERING"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Test Project for add project")))
+                .andExpect(status().isFound())
                 .andReturn();
         ModelAndView modelAndView = result.getModelAndView();
         assertNotNull(modelAndView);
@@ -196,13 +192,12 @@ public class ProjectsControllerTest {
                 .param("description","Test Project Description")
                 .param("minNumberOfStudents","2")
                 .param("maxNumberOfStudents","5"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Test Project for archive project")))
+                .andExpect(status().isFound())
                 .andReturn();
         ModelAndView modelAndView = result.getModelAndView();
         assertNotNull(modelAndView);
         assertNotNull(modelAndView.getViewName());
-        assertEquals("professor", modelAndView.getViewName());
+        assertEquals("redirect:/professor", modelAndView.getViewName());
 
         Project addedProject = this.projectService.getProjectByName("Test Project for archive project");
 
