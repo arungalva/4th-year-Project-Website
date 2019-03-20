@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,11 +89,11 @@ public class ProfessorController {
      */
     @PostMapping("/project/add")
     @Transactional
-    public RedirectView postAddProject(@ModelAttribute Project project, Model model){
+    public ModelAndView postAddProject(@ModelAttribute Project project, Model model){
         projectService.addProject(project);
-        List<Project> allProjects = projectService.getAllNonArchivedProjects();
-        model.addAttribute("projects",allProjects);
-        return new RedirectView("/professor");
+        List<Project> projects = projectService.getAllNonArchivedProjects();
+        model.addAttribute("projects",projects);
+        return new ModelAndView("redirect:/professor", (ModelMap) model);
     }
 
     /**
