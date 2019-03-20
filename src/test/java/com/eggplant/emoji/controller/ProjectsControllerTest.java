@@ -49,7 +49,6 @@ public class ProjectsControllerTest {
         assertNotNull(modelAndView);
         assertNotNull(modelAndView.getViewName());
         assertEquals("addproject", modelAndView.getViewName());
-
     }
 
     /**
@@ -83,7 +82,6 @@ public class ProjectsControllerTest {
         assertEquals(5, addedProject.getMaxNumberOfStudents());
         //remove the project that we tested
         this.projectService.removeProjectByName(projectName);
-
     }
 
     /**
@@ -157,9 +155,7 @@ public class ProjectsControllerTest {
         assertEquals(2, editedProject.getMinNumberOfStudents());
         assertEquals(5, editedProject.getMaxNumberOfStudents());
 
-        //remove the project that we tested
         this.projectService.removeProjectByName(newProjectName);
-
     }
 
     /**
@@ -176,7 +172,6 @@ public class ProjectsControllerTest {
         assertNotNull(modelAndView);
         assertNotNull(modelAndView.getViewName());
         assertEquals("archivedProjects", modelAndView.getViewName());
-
     }
 
     /**
@@ -185,31 +180,22 @@ public class ProjectsControllerTest {
      */
     @Test
     public void archiveProject() throws Exception {
-        this.projectService.removeProjectByName("Test Project for archive project");
-
-        MvcResult result = this.mockMvc.perform(post("/project/add")
-                .param("projectName","Test Project for archive project")
-                .param("description","Test Project Description")
+        String projectName = "archiveProjectTest name";
+        String projectDescription = "archiveProjectTest description";
+        this.mockMvc.perform(post("/project/add")
+                .param("projectName",projectName)
+                .param("description",projectDescription)
                 .param("minNumberOfStudents","2")
                 .param("maxNumberOfStudents","5"))
                 .andExpect(status().isFound())
                 .andReturn();
-        ModelAndView modelAndView = result.getModelAndView();
-        assertNotNull(modelAndView);
-        assertNotNull(modelAndView.getViewName());
-        assertEquals("redirect:/professor", modelAndView.getViewName());
 
-        Project addedProject = this.projectService.getProjectByName("Test Project for archive project");
-
+        Project addedProject = this.projectService.getProjectByName(projectName);
         assertNotNull(addedProject);
         assertNull(addedProject.getArchivedDate());
-
         addedProject.archiveProject();
         projectService.updateProject(addedProject);
-
-        assertNotNull(projectService.getProjectByName("Test Project for archive project").getArchivedDate());
-
-        this.projectService.removeProjectByName("Test Project for archive project");
-
+        assertNotNull(projectService.getProjectByName(projectName).getArchivedDate());
+        this.projectService.removeProjectByName(projectName);
     }
 }
