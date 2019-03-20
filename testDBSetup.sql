@@ -1,4 +1,3 @@
-CREATE USER 'eggplant'@'localhost' IDENTIFIED BY 'emoji';
-GRANT ALL PRIVILEGES ON * . * TO 'eggplant'@'localhost';
-
-CREATE DATABASE IF NOT EXISTS `sysc4806` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+CREATE USER eggplant WITH PASSWORD 'emoji';
+CREATE DATABASE sysc4806;
+GRANT ALL PRIVILEGES ON DATABASE "sysc4806" to eggplant;

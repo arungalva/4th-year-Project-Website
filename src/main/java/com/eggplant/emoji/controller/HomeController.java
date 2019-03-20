@@ -1,12 +1,15 @@
-package com.eggplant.emoji.app;
+package com.eggplant.emoji.controller;
 
+import com.eggplant.emoji.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private ProjectService service;
 
     @GetMapping("/")
     public String index() {

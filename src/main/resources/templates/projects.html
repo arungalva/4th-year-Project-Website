@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>4th-Year-Project-projects</title>
 
@@ -23,11 +22,6 @@
             <th rowspan="2" class="left aligned">ID</th>
             <th rowspan="2" class="left aligned">Title</th>
             <th rowspan="2" class="left aligned">Program</th>
-            <th colspan="2" class="left aligned">Students</th>
-        </tr>
-        <tr>
-            <th>Name</th>
-            <th>Program</th>
         </tr>
         </thead>
         <tbody>
@@ -36,8 +30,6 @@
                 <td rowspan="1" th:text="${project.id}"></td>
                 <td rowspan="1" th:text="${project.projectName}"></td>
                 <td rowspan="1">SE</td>
-                <td>Alexandre Cournoyer</td>
-                <td>SE</td>
             </tr>
         </div>
         </tbody>
@@ -48,6 +40,8 @@
     </table>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
 <script src="/js/custom.js"></script>
 </body>
 </html>

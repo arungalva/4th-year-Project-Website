@@ -1,6 +1,8 @@
-package com.eggplant.emoji.app;
+package com.eggplant.emoji.controller;
 
 import com.eggplant.emoji.entities.Project;
+import com.eggplant.emoji.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -9,19 +11,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
-import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 public class ProfessorController {
 
-    public final EntityManager entityManager;
-
-    public ProfessorController(){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("jpa-test");
-        this.entityManager = emf.createEntityManager();
-    }
+    @Autowired
+    private ProjectService projectService;
 
     /**
      * GET request that returns the professor view
@@ -29,7 +26,10 @@ public class ProfessorController {
      */
     @GetMapping("/professor")
     public String index(Model model){
-        model.addAttribute("projects",getAllNonArchivedProjects());
+        List<Project> allProjects = projectService.findAll();
+
+        List<Project> allNonArchivedProjects = getAllNonArchiedProjects(allProjects);
+        model.addAttribute("projects",allNonArchivedProjects);
         return "professor";
     }
 
@@ -39,8 +39,10 @@ public class ProfessorController {
      */
     @GetMapping("/archivedProjects")
     public String archivedProjects(Model model){
+        List<Project> allProjects = projectService.findAll();
 
-        model.addAttribute("projects",getAllArchivedProjects());
+        List<Project> allArchivedProjects = getAllArchiedProjects(allProjects);
+        model.addAttribute("projects",allArchivedProjects);
         return "archivedProjects";
     }
 
@@ -55,19 +57,15 @@ public class ProfessorController {
     public RedirectView archiveProject(HttpServletRequest request, Model model){
         Long id = Long.parseLong(request.getParameter("id"));
 
-        Query q = entityManager.createQuery("SELECT p FROM Project p WHERE p.id = :id");
-        q.setParameter("id", id);
-        @SuppressWarnings("unchecked")
-        List<Project> results = q.getResultList();
-        Project project = results.get(0);
+        Project existingProject = projectService.findById(id);
+        existingProject.archiveProject();
 
-        project.archiveProject();
+        projectService.updateProject(existingProject);
 
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-        entityManager.persist(project);
-        tx.commit();
+        List<Project> allProjects = projectService.findAll();
 
+        List<Project> allNonArchivedProjects = getAllNonArchiedProjects(allProjects);
+        model.addAttribute("projects",allNonArchivedProjects);
         return new RedirectView("/professor");
     }
 
@@ -91,26 +89,32 @@ public class ProfessorController {
     @PostMapping("/project/add")
     @Transactional
     public String addProject(@ModelAttribute Project project, Model model){
-        EntityTransaction tx = entityManager.getTransaction();
-        tx.begin();
-        entityManager.persist(project);
-        tx.commit();
 
-        model.addAttribute("projects",getAllNonArchivedProjects());
+        projectService.addProject(project);
+        List<Project> allProjects = projectService.findAll();
+
+        List<Project> allNonArchivedProjects = getAllNonArchiedProjects(allProjects);
+        model.addAttribute("projects",allNonArchivedProjects);
         return "professor";
     }
 
-    private List<Project> getAllArchivedProjects(){
-        Query q = entityManager.createQuery("SELECT p FROM Project p WHERE p.archivedDate != NULL");
-        @SuppressWarnings("unchecked")
-        List<Project> results = q.getResultList();
-        return results;
+    public List<Project> getAllNonArchiedProjects(List<Project> allProjects) {
+        for(int i = 0; i < allProjects.size(); i++) {
+            if(allProjects.get(i).getArchivedDate() != null) {
+                allProjects.remove(allProjects.get(i));
+            }
+        }
+
+        return allProjects;
     }
 
-    private List<Project> getAllNonArchivedProjects(){
-        Query q = entityManager.createQuery("SELECT p FROM Project p WHERE p.archivedDate = NULL");
-        @SuppressWarnings("unchecked")
-        List<Project> results = q.getResultList();
-        return results;
+    public List<Project> getAllArchiedProjects(List<Project> allProjects) {
+        for(int i = 0; i < allProjects.size(); i++) {
+            if(allProjects.get(i).getArchivedDate() == null) {
+                allProjects.remove(allProjects.get(i));
+            }
+        }
+
+        return allProjects;
     }
 }
