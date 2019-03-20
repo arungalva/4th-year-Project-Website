@@ -30,12 +30,14 @@
                 <td rowspan="1" th:text="${project.projectName}"></td>
                 <td rowspan="1">SE</td>
                 <td rowspan="1">
-                    <div class="ui vertical animated blue button" tabindex="0">
-                        <div class="hidden content">Edit</div>
-                        <div class="visible content">
-                            <i class="edit icon"></i>
+                    <a th:href="'/project/edit?id=' + ${project.id}">
+                        <div class="ui vertical animated blue button" tabindex="0">
+                            <div class="hidden content">Edit</div>
+                            <div class="visible content">
+                                <i class="edit icon"></i>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </td>
                 <td rowspan="1">
                     <form action="/archive" method="POST">
