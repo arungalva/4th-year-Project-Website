@@ -106,6 +106,7 @@ public class ProfessorController {
     public String getEditProject(@RequestParam("id") Long projectId, Model model){
         Project existingProject = projectService.findById(projectId);
         model.addAttribute("project", existingProject);
+        model.addAttribute("programs", EnumSet.allOf(Program.class));
         return "editproject";
     }
 
