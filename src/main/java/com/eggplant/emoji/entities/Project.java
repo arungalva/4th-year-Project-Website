@@ -1,9 +1,12 @@
 package com.eggplant.emoji.entities;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.EnumSet;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -31,9 +34,14 @@ public class Project extends Auditable<String> {
     @Min(MINIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     private int maxNumberOfStudents;
-    //Todo: Change ProgramRestrictions to use entities or @enumerated because the EnumSet doesn't work currently
-//    @NotNull
-//    private EnumSet<Program> programRestrictions;
+
+    @ElementCollection(targetClass = Program.class)
+    @CollectionTable(name = "project_programRestriction",
+            joinColumns = @JoinColumn(name = "project_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "program_id")
+    private Set<Program> programRestrictions;
+
     @NotNull
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
     private List<User> students;
@@ -51,7 +59,6 @@ public class Project extends Auditable<String> {
         this.description = description;
         this.minNumberOfStudents = minNumberOfStudents;
         this.maxNumberOfStudents = maxNumberOfStudents;
-//        this.programRestrictions = programRestrictions;
         this.students = new ArrayList<User>();
         this.archivedDate = null;
     }
@@ -74,8 +81,8 @@ public class Project extends Auditable<String> {
     public List<User> getStudents() { return this.students; }
     public void setStudents(List<User> students) { this.students = students; }
 
-//    public EnumSet<Program> getProgramRestrictions() { return this.programRestrictions; }
-//    public void setProgramRestrictions(EnumSet<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
+    public Set<Program> getProgramRestrictions() { return this.programRestrictions; }
+    public void setProgramRestrictions(Set<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
 
     public Date getArchivedDate() { return this.archivedDate; }
     public void setArchivedDate(Date date) { this.archivedDate = date; }

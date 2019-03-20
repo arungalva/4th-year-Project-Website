@@ -1,5 +1,6 @@
 package com.eggplant.emoji.controller;
 
+import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.EnumSet;
 import java.util.List;
 
 @Controller
@@ -71,6 +73,7 @@ public class ProfessorController {
     @GetMapping("/project/add")
     public String getAddProject(Model model){
         model.addAttribute("project", new Project());
+        model.addAttribute("programs", EnumSet.allOf(Program.class));
         return "addproject";
     }
 

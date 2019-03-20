@@ -18,12 +18,6 @@ public class User extends Auditable<String> {
 //        COORDINATOR;
 //    }
 //
-//    enum Program {
-//        BIOMEDICAL_ELECTRICAL,
-//        COMMUNICATION,
-//        COMPUTER_SYSTEMS,
-//        SOFTWARE;
-//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

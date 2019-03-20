@@ -1,9 +1,11 @@
 package com.eggplant.emoji.controller;
 
+import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.service.ProjectService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.internal.util.collections.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,9 +16,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.hamcrest.Matchers;
-
-
-import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
@@ -63,7 +62,10 @@ public class ProjectsControllerTest {
                 .param("projectName","Test Project for add project")
                 .param("description","Test Project Description")
                 .param("minNumberOfStudents","2")
-                .param("maxNumberOfStudents","5"))
+                .param("maxNumberOfStudents","5")
+                .param("programRestrictions", "BIOMEDICAL_ELECTRICAL",
+                                                            "ELECTRICAL_ENGINEERING",
+                                                            "COMPUTER_SYSTEMS_ENGINEERING"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Test Project for add project")))
                 .andReturn();
@@ -78,7 +80,6 @@ public class ProjectsControllerTest {
         assertEquals("Test Project Description", addedProject.getDescription());
         assertEquals(2, addedProject.getMinNumberOfStudents());
         assertEquals(5, addedProject.getMaxNumberOfStudents());
-
         //remove the project that we tested
         this.projectService.removeProjectByName("Test Project for add project");
 
