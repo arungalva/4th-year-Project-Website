@@ -23,7 +23,7 @@ This project is a web application to manage 4th year engineering capstone projec
 
 
 # ER Diagram
-![alt text](https://i.imgur.com/L9Tu5pQ.jpg)
+![alt text](src/main/resources/static/assets/images/Database_Schema.png)
 
 
 # Current Status
