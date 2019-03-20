@@ -44,16 +44,16 @@ public class ProfessorController {
 
     /**
      * Received POST requests and calls archivedProject() on the project that was clicked
-     * @param request HttpServletRequest request from the input field
+     * @param request HttpServletRequest request from the input field of project id
      * @param model model used to send the list of projects to the view
      * @return the professor view to display all the non archived projects
      */
     @PostMapping("/archive")
     @Transactional
     public RedirectView archiveProject(HttpServletRequest request, Model model){
-        Long id = Long.parseLong(request.getParameter("id"));
+        Long projectId = Long.parseLong(request.getParameter("id"));
 
-        Project existingProject = projectService.findById(id);
+        Project existingProject = projectService.findById(projectId);
         existingProject.archiveProject();
 
         projectService.updateProject(existingProject);

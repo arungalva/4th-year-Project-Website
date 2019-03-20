@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import org.hamcrest.Matchers;
 
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
@@ -139,6 +142,8 @@ public class ProjectsControllerTest {
      */
     @Test
     public void archiveProject() throws Exception {
+        this.projectService.removeProjectByName("Test Project for archive project");
+
         MvcResult result = this.mockMvc.perform(post("/project/add")
                 .param("projectName","Test Project for archive project")
                 .param("description","Test Project Description")
@@ -155,10 +160,6 @@ public class ProjectsControllerTest {
         Project addedProject = this.projectService.getProjectByName("Test Project for archive project");
 
         assertNotNull(addedProject);
-        assertEquals("Test Project for archive project", addedProject.getProjectName());
-        assertEquals("Test Project Description", addedProject.getDescription());
-        assertEquals(2, addedProject.getMinNumberOfStudents());
-        assertEquals(5, addedProject.getMaxNumberOfStudents());
         assertNull(addedProject.getArchivedDate());
 
         addedProject.archiveProject();
