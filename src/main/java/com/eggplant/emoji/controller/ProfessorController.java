@@ -26,10 +26,8 @@ public class ProfessorController {
      */
     @GetMapping("/professor")
     public String index(Model model){
-        List<Project> allProjects = projectService.findAll();
-
-        List<Project> allNonArchivedProjects = getAllNonArchiedProjects(allProjects);
-        model.addAttribute("projects",allNonArchivedProjects);
+        List<Project> allProjects = projectService.getAllNonArchivedProjects();
+        model.addAttribute("projects",allProjects);
         return "professor";
     }
 
@@ -39,10 +37,8 @@ public class ProfessorController {
      */
     @GetMapping("/archivedProjects")
     public String archivedProjects(Model model){
-        List<Project> allProjects = projectService.findAll();
-
-        List<Project> allArchivedProjects = getAllArchiedProjects(allProjects);
-        model.addAttribute("projects",allArchivedProjects);
+        List<Project> allProjects =  projectService.getAllArchivedProjects();
+        model.addAttribute("projects",allProjects);
         return "archivedProjects";
     }
 
@@ -62,10 +58,8 @@ public class ProfessorController {
 
         projectService.updateProject(existingProject);
 
-        List<Project> allProjects = projectService.findAll();
-
-        List<Project> allNonArchivedProjects = getAllNonArchiedProjects(allProjects);
-        model.addAttribute("projects",allNonArchivedProjects);
+        List<Project> allProjects = projectService.getAllNonArchivedProjects();
+        model.addAttribute("projects",allProjects);
         return new RedirectView("/professor");
     }
 
@@ -91,30 +85,9 @@ public class ProfessorController {
     public String addProject(@ModelAttribute Project project, Model model){
 
         projectService.addProject(project);
-        List<Project> allProjects = projectService.findAll();
 
-        List<Project> allNonArchivedProjects = getAllNonArchiedProjects(allProjects);
-        model.addAttribute("projects",allNonArchivedProjects);
+        List<Project> allProjects = projectService.getAllNonArchivedProjects();
+        model.addAttribute("projects",allProjects);
         return "professor";
-    }
-
-    public List<Project> getAllNonArchiedProjects(List<Project> allProjects) {
-        for(int i = 0; i < allProjects.size(); i++) {
-            if(allProjects.get(i).getArchivedDate() != null) {
-                allProjects.remove(allProjects.get(i));
-            }
-        }
-
-        return allProjects;
-    }
-
-    public List<Project> getAllArchiedProjects(List<Project> allProjects) {
-        for(int i = 0; i < allProjects.size(); i++) {
-            if(allProjects.get(i).getArchivedDate() == null) {
-                allProjects.remove(allProjects.get(i));
-            }
-        }
-
-        return allProjects;
     }
 }

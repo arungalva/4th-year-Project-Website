@@ -24,14 +24,8 @@ public class ProjectsController {
      */
     @GetMapping("/projects")
     public String index(Model model){
-        List<Project> allProjects = this.projectService.findAll();
-
-        for(int i = 0; i < allProjects.size(); i++) {
-            if(allProjects.get(i).getArchivedDate() != null) {
-                allProjects.remove(allProjects.get(i));
-            }
-        }
-        model.addAttribute("projects", allProjects);
+        List<Project> allProjects = projectService.getAllNonArchivedProjects();
+        model.addAttribute("projects",allProjects);
         return "projects";
     }
 
