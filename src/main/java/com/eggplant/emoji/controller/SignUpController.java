@@ -27,7 +27,7 @@ public class SignUpController {
         return "signup";
     }
 
-    @PostMapping
+    @PostMapping("/signup")
     @Transactional
     public ModelAndView signup(@ModelAttribute UserDto user, Model model) {
         userService.createAccount(user);
