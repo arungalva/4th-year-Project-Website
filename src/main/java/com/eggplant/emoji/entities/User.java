@@ -34,7 +34,10 @@ public class User extends Auditable<String> {
     private String lastName;
     @NotNull
     @Pattern(regexp = "\\S+@(cmail\\.)?carleton.ca", message = "Email must be a valid email belonging to the (cmail.)carleton.ca domain.")
+    @Column(unique = true)
     private String email;
+
+    private String password;
 //    @NotNull
 //    private Program program;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -73,5 +76,13 @@ public class User extends Auditable<String> {
     @Override
     public String toString() {
         return this.memberId + " " + this.firstName + " " + this.lastName + " " + this.email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

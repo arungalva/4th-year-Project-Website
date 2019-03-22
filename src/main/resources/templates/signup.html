@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+        body {
+            background-color: #1b1c1d;
+        }
+        body > .grid {
+            height: 100%;
+            margin-top: 0px;
+        }
+        .image {
+            margin-top: -100px;
+        }
+        .column {
+            max-width: 450px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 class="ui image inverted header">
+            <img src="assets/images/logo.png" class="image">
+            <div class="content">
+                Create your account
+            </div>
+        </h2>
+        <form class="ui large form" action="/" th:object="${user}" method="post">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="email" placeholder="johndoe@cmail.carleton.ca" th:field="*{email}" autocomplete="on">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="" th:field="*{password}" autocomplete="on">
+                    </div>
+                </div>
+                <!--<div class="field">-->
+                    <!--<label>Confirm password</label>-->
+                    <!--<div class="ui left icon input">-->
+                        <!--<i class="lock icon"></i>-->
+                        <!--<input type="password" name="password" placeholder="" th:field="*{matchingPassword}" autocomplete="on">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <button class="ui fluid large teal submit button" type="submit">Signup</button>
+            </div>
+
+            <div class="ui error message"></div>
+
+        </form>
+
+        <div class="ui message">
+            Already have an account? <a href="#">Sign in</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>
