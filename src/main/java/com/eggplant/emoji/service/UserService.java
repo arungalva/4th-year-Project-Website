@@ -15,12 +15,13 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    UserRepository repo;
+    private UserRepository repo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     public void createAccount(User account) {
+        account.setEmail(account.getEmail().toLowerCase());
         account.setPassword(passwordEncoder.encode(account.getPassword()));
 
         repo.save(account);
