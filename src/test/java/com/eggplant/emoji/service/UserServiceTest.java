@@ -64,12 +64,11 @@ public class UserServiceTest {
     public void testSaveUser(){
 
         String password = "TestUserPassword123";
-        Long id = new Long(1);
+        String email = "arungalva@cmail.carleton.ca";
         u = new User();
-        u.setId(id);
         u.setFirstName("Arun");
         u.setLastName("Galva");
-        u.setEmail("arungalva@cmail.carleton.ca");
+        u.setEmail(email);
         u.setMemberId(100976147);
         u.setRole(Role.STUDENT.toString());
         u.setPassword(password);
@@ -77,7 +76,7 @@ public class UserServiceTest {
         String hashedPassword = passwordEncoder.encode(password);
         service.createAccount(u);
 
-        User savedUser = repo.findByEmail("arungalva@cmail.carleton.ca");
+        User savedUser = repo.findByEmail(email);
         assertEquals(savedUser.getFirstName(), u.getFirstName());
         assertEquals(savedUser.getLastName(), u.getLastName());
         assertEquals(savedUser.getEmail(), u.getEmail());
@@ -124,7 +123,14 @@ public class UserServiceTest {
         duplicateEmailuser.setMemberId(100976197);
         duplicateEmailuser.setRole(Role.STUDENT.toString());
         duplicateEmailuser.setPassword("random password");
-        service.createAccount(duplicateEmailuser);
+
+        try {
+            service.createAccount(duplicateEmailuser);
+        } catch (Exception e) {
+            repo.delete(u);
+            throw e;
+        }
+
 
     }
 
