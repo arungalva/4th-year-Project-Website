@@ -26,6 +26,15 @@ public class UserService {
         repo.save(account);
     }
 
+    public User getUserByEmail(String email) {
+        return repo.findByEmail(email);
+    }
+
+    public void deleteByEmail(String email) {
+        User u = repo.findByEmail(email);
+        repo.delete(u);
+    }
+
     public Role[] getAllRoles(){
         return Role.values();
     }

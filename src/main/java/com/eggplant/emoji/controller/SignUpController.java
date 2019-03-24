@@ -28,7 +28,6 @@ public class SignUpController {
         User user = new User();
         model.addAttribute("user", user);
         model.addAttribute("roles", userService.getAllRoles());
-//        model.addAttribute("programs", userService.getAllPrograms());
         return "signup";
     }
 
@@ -38,11 +37,9 @@ public class SignUpController {
             if(result.hasErrors()){
             model.addAttribute("user", user);
             model.addAttribute("roles", userService.getAllRoles());
-//            model.addAttribute("programs", userService.getAllPrograms());
             return "signup";
         }
         userService.createAccount(user);
         return "redirect:/projects";
-//        return new ModelAndView("redirect:/projects", (ModelMap) model);
     }
 }
