@@ -57,7 +57,6 @@ public class UserServiceTest {
         assertTrue(passwordEncoder.matches(password, savedUser.getPassword()));
 
         repo.delete(savedUser);
-
     }
 
 
@@ -87,14 +86,15 @@ public class UserServiceTest {
         assertEquals(savedUser.getMemberId(), u.getMemberId());
 
         repo.delete(savedUser);
+
     }
 
     @Test
     public void testGetAllRoles() {
         Role[] actualAllRoles = service.getAllRoles();
-        Role[] exptectedAllRoles = Role.values();
+        Role[] expectedAllRoles = Role.values();
 
-        assertArrayEquals(actualAllRoles, exptectedAllRoles);
+        assertArrayEquals(actualAllRoles, expectedAllRoles);
     }
 
     @Test
@@ -108,9 +108,7 @@ public class UserServiceTest {
     @Test
     public void testUniqueEmailExceptionRaised() {
         exception.expect(org.springframework.dao.DataIntegrityViolationException.class);
-        exception.expectMessage("could not execute statement; SQL [n/a]; constraint [uk_6dotkott2kjsp8vw4d0m25fb7]");
         u = new User();
-        u.setId(new Long(1));
         u.setFirstName("Arun");
         u.setLastName("Galva");
         u.setEmail("arungalva@cmail.carleton.ca");
@@ -120,7 +118,6 @@ public class UserServiceTest {
         service.createAccount(u);
 
         User duplicateEmailuser = new User();
-        duplicateEmailuser.setId(new Long(2));
         duplicateEmailuser.setFirstName("Test");
         duplicateEmailuser.setLastName("User");
         duplicateEmailuser.setEmail("arungalva@cmail.carleton.ca");
@@ -129,8 +126,13 @@ public class UserServiceTest {
         duplicateEmailuser.setPassword("random password");
         service.createAccount(duplicateEmailuser);
 
-        repo.delete(u);
-        repo.delete(duplicateEmailuser);
+    }
+
+    @After
+    public void tearDown(){
+        if(u != null) {
+            repo.delete(u);
+        }
     }
 
 }
