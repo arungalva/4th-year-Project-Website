@@ -26,6 +26,15 @@ public class UserService {
         repo.save(account);
     }
 
+    public boolean AuthenticateUser(String email, String password) {
+        User optainedUser = repo.findByEmail(email);
+        if(optainedUser.getPassword().equals(password)) {
+            return true;
+        }
+        return false;
+
+    }
+
     public User getUserByEmail(String email) {
         return repo.findByEmail(email);
     }
