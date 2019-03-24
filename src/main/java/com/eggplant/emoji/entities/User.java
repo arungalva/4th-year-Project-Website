@@ -15,6 +15,7 @@ public class User extends Auditable<String> {
     // If the User role is PROFESSOR or COORDINATOR, then the memberId holds the employee ID
     @NotNull
     @Min(value = 100000000, message = "Number must be a 9 digit number")
+    @Max(value = 999999999, message = "Number must be a 9 digit number")
     private int memberId;
 
     @Enumerated(EnumType.STRING)
