@@ -11,14 +11,14 @@ import javax.validation.constraints.Pattern;
 
 public class LoginForm {
 
-    @NotNull
+    @NotNull(message = "Email cannot be empty")
     @Pattern(regexp = "\\S+@(cmail\\.)?carleton.ca", message = "Email must be a valid email belonging to the (cmail.)carleton.ca domain.")
     @Column(unique = true)
     @NotEmpty(message = "Email cannot be empty")
     private String email;
 
-    @NotNull
-    @Min(8)
+    @NotNull(message = "Password cannot be empty")
+//    @Min(value = 8)
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
@@ -31,4 +31,8 @@ public class LoginForm {
 
     public String getEmail() { return this.email; }
     public void setEmail(String email) { this.email = email; }
+
+    public String toString() {
+        return "LoginForm(Email: " + this.email + ", Password: " + this.password + ")";
+    }
 }
