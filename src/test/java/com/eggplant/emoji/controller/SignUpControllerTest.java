@@ -42,29 +42,35 @@ public class SignUpControllerTest {
         int memberId = 100976147;
         Role role = Role.STUDENT;
         String password = "TestPassword";
-        MvcResult result = this.mockMvc.perform(post("/signup")
-                .param("firstName",firstName)
-                .param("lastName",lastName)
-                .param("email",email)
-                .param("memberId", String.valueOf(memberId))
-                .param("role", role.toString())
-                .param("password", password))
-                .andExpect(status().isFound())
-                .andReturn();
 
-        ModelAndView modelAndView = result.getModelAndView();
-        assertNotNull(modelAndView);
-        assertNotNull(modelAndView.getViewName());
-        assertEquals("redirect:/projects", modelAndView.getViewName());
+        try {
+            MvcResult result = this.mockMvc.perform(post("/signup")
+                    .param("firstName", firstName)
+                    .param("lastName", lastName)
+                    .param("email", email)
+                    .param("memberId", String.valueOf(memberId))
+                    .param("role", role.toString())
+                    .param("password", password))
+                    .andExpect(status().isFound())
+                    .andReturn();
+            ModelAndView modelAndView = result.getModelAndView();
+            assertNotNull(modelAndView);
+            assertNotNull(modelAndView.getViewName());
+            assertEquals("redirect:/projects", modelAndView.getViewName());
 
-        User signedUpUser = this.userService.getUserByEmail(email);
-        assertNotNull(signedUpUser);
-        assertEquals(firstName, signedUpUser.getFirstName());
-        assertEquals(lastName, signedUpUser.getLastName());
-        assertEquals(email, signedUpUser.getEmail());
-        assertEquals(memberId, signedUpUser.getMemberId());
-        assertEquals(role, signedUpUser.getRole());
-        //remove the project that we tested
-        this.userService.deleteByEmail(email);
+            User signedUpUser = this.userService.getUserByEmail(email);
+            assertNotNull(signedUpUser);
+            assertEquals(firstName, signedUpUser.getFirstName());
+            assertEquals(lastName, signedUpUser.getLastName());
+            assertEquals(email, signedUpUser.getEmail());
+            assertEquals(memberId, signedUpUser.getMemberId());
+            assertEquals(role, signedUpUser.getRole());
+            this.userService.deleteByEmail(email);
+        } catch (Exception e) {
+            //remove the project that we tested
+            this.userService.deleteByEmail(email);
+            throw e;
+        }
+
     }
 }
