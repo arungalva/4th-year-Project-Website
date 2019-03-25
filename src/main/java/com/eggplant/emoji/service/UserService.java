@@ -27,9 +27,14 @@ public class UserService {
     }
 
     public boolean AuthenticateUser(String email, String password) {
-        User optainedUser = repo.findByEmail(email);
-        if(passwordEncoder.matches(password, optainedUser.getPassword())) {
-            return true;
+        User optainedUser;
+        try {
+            optainedUser = repo.findByEmail(email);
+            if(passwordEncoder.matches(password, optainedUser.getPassword())) {
+                return true;
+            }
+        } catch (Exception e){
+            return false;
         }
         return false;
 

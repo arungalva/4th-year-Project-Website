@@ -28,8 +28,12 @@ public class LoginController {
     @PostMapping("/userLogin")
     @Transactional
         public String login(@Valid LoginForm loginForm, BindingResult result, Model model) {
-        if(result.hasErrors() || !userService.AuthenticateUser(loginForm.getEmail(), loginForm.getPassword())){
+        if(result.hasErrors()){
             model.addAttribute("loginForm", loginForm);
+            return "userLogin";
+        }
+        else if(!userService.AuthenticateUser(loginForm.getEmail(), loginForm.getPassword())) {
+            model.addAttribute("authError", "Email or password is not correct");
             return "userLogin";
         }
         return "redirect:/projects";
