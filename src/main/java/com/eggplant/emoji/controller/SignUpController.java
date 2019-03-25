@@ -4,6 +4,7 @@ import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.entities.User;
 import com.eggplant.emoji.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -40,6 +41,8 @@ public class SignUpController {
             return "signup";
         }
         userService.createAccount(user);
+        System.out.println("Successfully authenticated. Security context contains: " +
+                SecurityContextHolder.getContext().getAuthentication());
         return "redirect:/projects";
     }
 }

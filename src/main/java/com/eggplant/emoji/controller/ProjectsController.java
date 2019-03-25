@@ -3,6 +3,7 @@ package com.eggplant.emoji.controller;
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,8 @@ public class ProjectsController {
      */
     @GetMapping("/projects")
     public String index(Model model){
+        System.out.println("Successfully authenticated. Security context contains: " +
+                SecurityContextHolder.getContext().getAuthentication());
         List<Project> allProjects = projectService.getAllNonArchivedProjects();
         model.addAttribute("projects",allProjects);
         return "projects";
