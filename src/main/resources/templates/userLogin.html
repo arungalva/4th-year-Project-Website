@@ -41,6 +41,7 @@
         </h2>
         <form class="ui large form signup" action="/userLogin" th:object="${loginForm}" method="post">
             <div class="ui stacked segment">
+                <p class="error" th:text="${authError}"></p>
                 <div class="field">
                     <label>Email</label>
                     <div class="ui left icon input">
