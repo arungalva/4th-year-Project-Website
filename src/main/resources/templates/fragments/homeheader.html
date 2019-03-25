@@ -27,11 +27,11 @@
                 <a class="item" href="/logout">Logout</a>
             </div>
         </div>
-        <div sec:authorize="isAnonymous()" class="ui right floated dropdown item top-right">
-             <button class="ui inverted button" name="login-button" type="submit">
-                 <a href="/login"><i class="icon user"></i>
-                Log in </a>
-            </button>
+        <div sec:authorize="isAnonymous()" class="right menu">
+            <div class="item">
+                <a class="ui button" href="/login"><i class="icon user"></i>
+                    Log in</a>
+            </div>
         </div>
     </div>
 </div>
