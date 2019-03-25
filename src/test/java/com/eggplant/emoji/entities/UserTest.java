@@ -38,7 +38,7 @@ public class UserTest {
 
 
     @Test
-    public void testMemeberIdMinValueInvalid(){
+    public void testMemberIdMinValueInvalid(){
         User u = new User();
         u.setFirstName("Arun");
         u.setLastName("Galva");
