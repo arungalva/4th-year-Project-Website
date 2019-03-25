@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    List<User> findById(int id);
+    User findById(int id);
     List<User> findByMemberId(int memberId);
     List<User> findByFirstName(String firstName);
     List<User> findByLastName(String lastName);
-    List<User> findByEmail(String email);
+    User findByEmail(String email);
 
     @Modifying
     @Transactional

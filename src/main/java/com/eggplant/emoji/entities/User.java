@@ -1,55 +1,57 @@
 package com.eggplant.emoji.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "users")
 public class User extends Auditable<String> {
-    public static final int DEFAULT_MEMBER_ID = 100100100;
-    public static final String DEFAULT_FIRST_NAME = "John";
-    public static final String DEFAULT_LAST_NAME = "Doe";
-    public static final String DEFAULT_EMAIL = "john.doe@carleton.ca";
-//
-//    enum Role {
-//        STUDENT,
-//        PROFESSER,
-//        COORDINATOR;
-//    }
-//
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     // If the User role is STUDENT, then the memberId holds the student ID
     // If the User role is PROFESSOR or COORDINATOR, then the memberId holds the employee ID
     @NotNull
+    @Min(value = 100000000, message = "Number must be a 9 digit number")
+    @Max(value = 999999999, message = "Number must be a 9 digit number")
     private int memberId;
-//    @NotNull
-//    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role")
+    @NotNull(message = "Role cannot be empty")
+    private Role role;
+
     @NotNull
+    @NotEmpty(message = "First name can't be empty")
     private String firstName;
+
     @NotNull
+    @NotEmpty(message = "Last name can't be empty")
     private String lastName;
+
     @NotNull
     @Pattern(regexp = "\\S+@(cmail\\.)?carleton.ca", message = "Email must be a valid email belonging to the (cmail.)carleton.ca domain.")
+    @Column(unique = true)
     private String email;
-//    @NotNull
-//    private Program program;
+
+    @NotNull
+    @NotEmpty(message = "Password cannot be empty")
+    private String password;
+
+
     @ManyToOne(cascade = CascadeType.ALL)
     private Project project;
 
-    public User() {
-        this(DEFAULT_MEMBER_ID, DEFAULT_FIRST_NAME, DEFAULT_LAST_NAME, DEFAULT_EMAIL);
-    }
+    public User(){}
 
-    public User(int memberId,String firstName, String lastName, String email) {
+    public User(int memberId,String firstName, String lastName, String email, Role role) {
         this.memberId = memberId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-//        this.program = program;
+        this.role = role;
     }
 
     public Long getId() { return this.id; }
@@ -73,5 +75,21 @@ public class User extends Auditable<String> {
     @Override
     public String toString() {
         return this.memberId + " " + this.firstName + " " + this.lastName + " " + this.email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+       this.role = Role.valueOf(role.toUpperCase());
     }
 }

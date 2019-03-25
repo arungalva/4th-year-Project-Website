@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/fullpage.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 class="ui image inverted header">
+            <img src="assets/images/logo.png" class="image">
+            <div class="content">
+                Create your account
+            </div>
+        </h2>
+        <form class="ui large form signup" action="/signup" th:object="${user}" method="post">
+            <div class="ui stacked segment">
+                <div class="field">
+                    <label>First Name</label>
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="firstName" th:field="*{firstName}" autocomplete="on">
+                    </div>
+                    <p th:each="error : ${#fields.errors('firstName')}" th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <label>Last Name</label>
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="lastName" th:field="*{lastName}" autocomplete="on">
+                    </div>
+                    <p th:each="error : ${#fields.errors('lastName')}" th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <label>Email</label>
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="email" th:field="*{email}" autocomplete="on">
+                    </div>
+                    <p th:each="error : ${#fields.errors('email')}" th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <label>Member Id</label>
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="memberId" th:field="*{memberId}" autocomplete="on">
+                    </div>
+                    <p th:each="error : ${#fields.errors('memberId')}" th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <label>Role</label>
+                    <div class="ui selection dropdown signup-roles">
+                        <input type="hidden" name="role" th:field="*{role}" required>
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Role</div>
+                        <div class="menu">
+                            <div class="item" th:each="role:${roles}" th:text="${role}"></div>
+                        </div>
+                    </div>
+                    <p th:each="error : ${#fields.errors('role')}" th:text="${error}">Validation error</p>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password"  th:field="*{password}" autocomplete="on">
+                    </div>
+                    <p th:each="error : ${#fields.errors('password')}" th:text="${error}">Validation error</p>
+                </div>
+                <button class="ui fluid large teal submit button" type="submit">Signup</button>
+            </div>
+
+            <div class="ui error message"></div>
+
+        </form>
+
+        <div class="ui message">
+            Already have an account? <a href="#">Sign in</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>
