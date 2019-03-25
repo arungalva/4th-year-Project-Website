@@ -18,7 +18,6 @@ public class LoginForm {
     private String email;
 
     @NotNull(message = "Password cannot be empty")
-//    @Min(value = 8)
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 

@@ -37,7 +37,6 @@ public class User extends Auditable<String> {
     private String email;
 
     @NotNull
-    @Min(8)
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
