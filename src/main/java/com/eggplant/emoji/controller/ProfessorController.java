@@ -44,7 +44,6 @@ public class ProfessorController {
      * @return archived Project view
      */
     @GetMapping("/archivedProjects")
-    @PreAuthorize("hasAuthority('STUDENT')")
     public String archivedProjects(Model model){
         List<Project> allProjects =  projectService.getAllArchivedProjects();
         model.addAttribute("projects",allProjects);

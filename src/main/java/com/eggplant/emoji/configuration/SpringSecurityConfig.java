@@ -35,10 +35,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                //.loginPage("/userLogin")
+                //.defaultSuccessUrl("/")
                 .and()
                 .exceptionHandling()
                 .accessDeniedPage("/accessdenied");
-//                .loginPage("/userLogin");
 //                .loginProcessingUrl("/perform_login")
 //                .defaultSuccessUrl("/home", true)
 //                .failureUrl("/login.html?error=true")
