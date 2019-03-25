@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>4th-Year-Project-Home-Page</title>
 
@@ -25,21 +25,28 @@
 
 <div class="ui main container">
     <table style="text-align:center;border:none;" class="ui celled structured stackable table">
-    <td style="border:none;">
-        <a href="professor" target="_self" rel="noopener noreferrer">
-            <button class="ui button">Professor View</button>
-        </a>
-    </td>
-    <td style="border:none;">
-        <a href="/signup" target="_self" rel="noopener noreferrer">
-            <button class="ui button">Sign Up</button>
-        </a>
-    </td>
-    <td style="border:none;">
-        <a href="student" target="_self" rel="noopener noreferrer">
-            <button class="ui button">Student View</button>
-        </a>
-    </td>
+        <div sec:authorize="hasAuthority('PROFESSOR')">
+            <td style="border:none;">
+                <a href="professor" target="_self" rel="noopener noreferrer">
+                    <button class="ui button">Professor View</button>
+                </a>
+            </td>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <td style="border:none;">
+                <a href="/signup" target="_self" rel="noopener noreferrer">
+                    <button class="ui button">Sign Up</button>
+                </a>
+            </td>
+        </div>
+
+        <div sec:authorize="hasAuthority('STUDENT')">
+            <td style="border:none;">
+                <a href="student" target="_self" rel="noopener noreferrer">
+                    <button class="ui button">Student View</button>
+                </a>
+            </td>
+        </div>
     </table>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
