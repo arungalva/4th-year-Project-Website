@@ -40,23 +40,18 @@ public class User extends Auditable<String> {
     @NotEmpty(message = "Password cannot be empty")
     private String password;
 
-//    @NotNull
-//    @Column(name = "user_program")
-//    @Enumerated(EnumType.STRING)
-//    private Program program;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Project project;
 
     public User(){}
 
-    public User(int memberId,String firstName, String lastName, String email, Role role, Program program) {
+    public User(int memberId,String firstName, String lastName, String email, Role role) {
         this.memberId = memberId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.role = role;
-//        this.program = program;
     }
 
     public Long getId() { return this.id; }
@@ -97,10 +92,4 @@ public class User extends Auditable<String> {
     public void setRole(String role) {
        this.role = Role.valueOf(role.toUpperCase());
     }
-
-//    public Program getProgram() { return program; }
-//
-//    public void setProgram(String program) {
-//        this.program = Program.valueOf(program);
-//    }
 }
