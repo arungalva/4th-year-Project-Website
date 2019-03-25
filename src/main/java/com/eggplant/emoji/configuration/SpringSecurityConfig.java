@@ -38,6 +38,9 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.loginPage("/userLogin")
                 //.defaultSuccessUrl("/")
                 .and()
+                .logout()
+                .logoutSuccessUrl("/")
+                .and()
                 .exceptionHandling()
                 .accessDeniedPage("/accessdenied");
 //                .loginProcessingUrl("/perform_login")
