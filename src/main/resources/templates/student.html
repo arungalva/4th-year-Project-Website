@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>4th-Year-Project Student Overview</title>
+
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div th:insert="fragments/header :: header"></div>
+<div class="ui main container">
+    <h1 class="ui header">Student Overview</h1>
+    <table style="overflow-x:auto;" class="ui celled structured stackable table projects">
+        <tbody>
+            <div>
+                <td>Hello DUMMY_NAME, you are a student. Your student ID is 100100100.</td>
+            </div>
+        </tbody>
+        <tbody>
+            <div>
+                <tr><td>You have joined the project: <b>Eggplant Emoji</b></td></tr>
+                <tr><td>Other students who have joined this project: Babak Esfandiari, Mike Vezina, and the other TAs</td></tr>
+            </div>
+        </tbody>
+        <tfoot class="full-width">
+        <tfoot class="full-width">
+        <tr>
+            <th colspan="7">
+                <a href="#">
+                    <div class="ui floated small primary labeled icon button">
+                        <i class="user icon"></i>Upload Document
+                    </div>
+                </a>
+            </th>
+        </tr>
+        </tfoot>
+        </tfoot>
+    </table>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>
