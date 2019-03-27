@@ -8,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.EnumSet;
-import java.util.List;
-
 @Service
 public class UserService {
 
@@ -24,20 +21,6 @@ public class UserService {
         account.setEmail(account.getEmail().toLowerCase());
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         repo.save(account);
-    }
-
-    public boolean AuthenticateUser(String email, String password) {
-        User optainedUser;
-        try {
-            optainedUser = repo.findByEmail(email);
-            if(passwordEncoder.matches(password, optainedUser.getPassword())) {
-                return true;
-            }
-        } catch (Exception e){
-            return false;
-        }
-        return false;
-
     }
 
     public User getUserByEmail(String email) {
