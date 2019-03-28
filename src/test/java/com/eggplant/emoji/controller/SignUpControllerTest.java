@@ -4,6 +4,7 @@ import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.entities.Role;
 import com.eggplant.emoji.entities.User;
 import com.eggplant.emoji.service.UserService;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ModelAndView;
+import static org.hamcrest.core.StringContains.containsString;
+
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,6 +35,11 @@ public class SignUpControllerTest {
 
     @Autowired
     private UserService userService;
+
+    @After
+    public void tearDown() {
+        userService.removeAllUsers();
+    }
 
     /**
      * Sends a POST request with a new project and tests if that project was added to the database
@@ -59,6 +70,7 @@ public class SignUpControllerTest {
             assertEquals("redirect:/projects", modelAndView.getViewName());
 
             User signedUpUser = this.userService.getUserByEmail(email);
+            System.out.println("signedUpUser is:" + signedUpUser);
             assertNotNull(signedUpUser);
             assertEquals(firstName, signedUpUser.getFirstName());
             assertEquals(lastName, signedUpUser.getLastName());
@@ -66,9 +78,11 @@ public class SignUpControllerTest {
             assertEquals(memberId, signedUpUser.getMemberId());
             assertEquals(role, signedUpUser.getRole());
             this.userService.deleteByEmail(email);
+
         } catch (Exception e) {
             //remove the project that we tested
             this.userService.deleteByEmail(email);
+
             throw e;
         }
 

@@ -2,6 +2,7 @@ package com.eggplant.emoji.controller;
 
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.service.ProjectService;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.hamcrest.Matchers;
 
 import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -27,13 +28,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ProjectsControllerTest {
+public class ProfessorControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
     private ProjectService projectService;
+
+    @After
+    public void tearDown() {
+        projectService.removeAllProjects();
+    }
 
     /**
      * Tests if the /project/add page loads correctly
@@ -59,29 +65,40 @@ public class ProjectsControllerTest {
     public void addProject() throws Exception {
         String projectName = "addProjectTest name";
         String projectDescription = "addProjectTest description";
-        MvcResult result = this.mockMvc.perform(post("/project/add")
-                .param("projectName",projectName)
-                .param("description",projectDescription)
-                .param("minNumberOfStudents","2")
-                .param("maxNumberOfStudents","5")
-                .param("programRestrictions", "BIOMEDICAL_ELECTRICAL",
-                                                            "ELECTRICAL_ENGINEERING",
-                                                            "COMPUTER_SYSTEMS_ENGINEERING"))
-                .andExpect(status().isFound())
-                .andReturn();
-        ModelAndView modelAndView = result.getModelAndView();
-        assertNotNull(modelAndView);
-        assertNotNull(modelAndView.getViewName());
-        assertEquals("redirect:/professor", modelAndView.getViewName());
 
-        Project addedProject = this.projectService.getProjectByName(projectName);
-        assertNotNull(addedProject);
-        assertEquals(projectName, addedProject.getProjectName());
-        assertEquals(projectDescription, addedProject.getDescription());
-        assertEquals(2, addedProject.getMinNumberOfStudents());
-        assertEquals(5, addedProject.getMaxNumberOfStudents());
-        //remove the project that we tested
-        this.projectService.removeProjectByName(projectName);
+        try {
+            MvcResult result = this.mockMvc.perform(post("/project/add")
+                    .param("projectName",projectName)
+                    .param("description",projectDescription)
+                    .param("minNumberOfStudents","2")
+                    .param("maxNumberOfStudents","5")
+                    .param("programRestrictions", "BIOMEDICAL_ELECTRICAL",
+                                                                "ELECTRICAL_ENGINEERING",
+                                                                "COMPUTER_SYSTEMS_ENGINEERING"))
+                    .andExpect(status().isFound())
+                    .andReturn();
+            ModelAndView modelAndView = result.getModelAndView();
+            assertNotNull(modelAndView);
+            assertNotNull(modelAndView.getViewName());
+            assertEquals("redirect:/professor", modelAndView.getViewName());
+
+            Project addedProject = this.projectService.getProjectByName(projectName);
+            assertNotNull(addedProject);
+            assertEquals(projectName, addedProject.getProjectName());
+            assertEquals(projectDescription, addedProject.getDescription());
+            assertEquals(2, addedProject.getMinNumberOfStudents());
+            assertEquals(5, addedProject.getMaxNumberOfStudents());
+
+            //remove the project that we tested
+            this.projectService.removeProjectByName(projectName);
+
+        } catch (Exception e) {
+            //remove the project that we tested
+            this.projectService.removeProjectByName(projectName);
+
+            throw e;
+
+        }
     }
 
     /**

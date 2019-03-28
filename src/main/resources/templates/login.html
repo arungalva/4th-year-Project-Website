@@ -37,10 +37,6 @@
                     </div>
                 </div>
                 <p class="error" th:text="${message}"></p>
-
-                <div class="field">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                </div>
                 <button class="ui fluid large teal submit button" name="submit" type="submit">Login</button>
             </div>
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -30,6 +32,13 @@ public class UserService {
     public void deleteByEmail(String email) {
         User u = repo.findByEmail(email);
         repo.delete(u);
+    }
+
+    public void removeAllUsers() {
+        List<User> allusers = repo.findAll();
+        for(int i = 0; i < allusers.size(); i++) {
+            repo.delete(allusers.get(i));
+        }
     }
 
     public Role[] getAllRoles(){
