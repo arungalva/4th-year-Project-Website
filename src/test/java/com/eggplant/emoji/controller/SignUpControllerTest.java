@@ -65,7 +65,6 @@ public class SignUpControllerTest {
             assertEquals("redirect:/projects", modelAndView.getViewName());
 
             User signedUpUser = this.userService.getUserByEmail(email);
-            System.out.println("signedUpUser is:" + signedUpUser);
             assertNotNull(signedUpUser);
             assertEquals(firstName, signedUpUser.getFirstName());
             assertEquals(lastName, signedUpUser.getLastName());
@@ -73,11 +72,9 @@ public class SignUpControllerTest {
             assertEquals(memberId, signedUpUser.getMemberId());
             assertEquals(role, signedUpUser.getRole());
             this.userService.deleteByEmail(email);
-
         } catch (Exception e) {
             //remove the project that we tested
             this.userService.deleteByEmail(email);
-
             throw e;
         }
 
