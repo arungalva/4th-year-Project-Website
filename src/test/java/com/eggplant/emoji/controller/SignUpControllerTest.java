@@ -9,6 +9,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -36,6 +40,7 @@ public class SignUpControllerTest {
      * @throws Exception
      */
     @Test
+    @WithAnonymousUser
     public void signup() throws Exception {
         String firstName = "Arun";
         String lastName = "Galva";
@@ -72,6 +77,21 @@ public class SignUpControllerTest {
             this.userService.deleteByEmail(email);
             throw e;
         }
+    }
 
+    /**
+     * Test that authenticated users cannot access the login page
+     * @throws Exception
+     */
+    @Test
+    @WithMockUser(username = "John", authorities = {"STUDENT"})
+    public void getStudentLoads() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/signup"))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = result.getResponse();
+        assertNotNull(mockHttpServletResponse);
+        assertNotNull(mockHttpServletResponse.getForwardedUrl());
+        assertEquals("/accessdenied", mockHttpServletResponse.getForwardedUrl());
     }
 }
