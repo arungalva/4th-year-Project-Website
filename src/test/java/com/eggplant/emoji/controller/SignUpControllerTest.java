@@ -62,7 +62,7 @@ public class SignUpControllerTest {
             ModelAndView modelAndView = result.getModelAndView();
             assertNotNull(modelAndView);
             assertNotNull(modelAndView.getViewName());
-            assertEquals("redirect:/projects", modelAndView.getViewName());
+            assertEquals("redirect:/", modelAndView.getViewName());
 
             User signedUpUser = this.userService.getUserByEmail(email);
             assertNotNull(signedUpUser);

@@ -43,8 +43,6 @@ public class SignUpController {
             return "signup";
         }
         userService.createAccount(user);
-        System.out.println("Successfully authenticated. Security context contains: " +
-                SecurityContextHolder.getContext().getAuthentication());
-        return "redirect:/projects";
+        return "redirect:/";
     }
 }
