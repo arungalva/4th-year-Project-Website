@@ -5,29 +5,9 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/fullpage.css" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style type="text/css">
-        body {
-            background-color: #1b1c1d;
-        }
-        body > .grid {
-            height: 100%;
-            margin-top: 0px;
-        }
-        .image {
-            margin-top: -100px;
-        }
-        .column {
-            max-width: 450px;
-        }
-        .ui.form.signup {
-            text-align: left;
-        }
-        .error {
-            color: red;
-        }
-    </style>
 </head>
 <body>
 
@@ -39,26 +19,25 @@
                 Login to your account
             </div>
         </h2>
-        <form class="ui large form signup" action="/userLogin" th:object="${loginForm}" method="post">
+        <form class="ui large form signup" action="#" th:action="@{/login}" method="post">
             <div class="ui stacked segment">
-                <p class="error" th:text="${authError}"></p>
+                <p class="error" th:text="${error}"></p>
                 <div class="field">
                     <label>Email</label>
                     <div class="ui left icon input">
                         <i class="user icon"></i>
-                        <input type="text" name="email" th:field="*{email}" autocomplete="on">
+                        <input type="text" id="email" name="username" autocomplete="on">
                     </div>
-                    <p th:each="error : ${#fields.errors('email')}" th:text="${error}" class="error">Validation error</p>
                 </div>
                 <div class="field">
                     <label>Password</label>
                     <div class="ui left icon input">
                         <i class="lock icon"></i>
-                        <input type="password" name="password"  th:field="*{password}" autocomplete="on">
+                        <input type="password" id="password" name="password" autocomplete="on">
                     </div>
-                    <p th:each="error : ${#fields.errors('password')}" th:text="${error}" class="error">Validation error</p>
                 </div>
-                <button class="ui fluid large teal submit button" type="submit">Login</button>
+                <p class="error" th:text="${message}"></p>
+                <button class="ui fluid large teal submit button" name="submit" type="submit">Login</button>
             </div>
 
             <div class="ui error message"></div>

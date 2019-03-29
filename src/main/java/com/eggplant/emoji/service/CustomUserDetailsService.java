@@ -1,7 +1,3 @@
-package com.eggplant.emoji.service;
-
-import com.eggplant.emoji.entities.Role;
-import com.eggplant.emoji.entities.User;
 import com.eggplant.emoji.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
