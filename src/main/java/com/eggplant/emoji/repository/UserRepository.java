@@ -17,5 +17,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Modifying
     @Transactional
-    void deleteById(int id);
+    void deleteById(Long id);
 }
