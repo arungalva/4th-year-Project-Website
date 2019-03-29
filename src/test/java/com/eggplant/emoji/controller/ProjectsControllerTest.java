@@ -7,6 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -197,5 +200,53 @@ public class ProjectsControllerTest {
         projectService.updateProject(addedProject);
         assertNotNull(projectService.getProjectByName(projectName).getArchivedDate());
         this.projectService.removeProjectByName(projectName);
+    }
+
+    /**
+     * Tests if the /professor page loads correctly
+     * @throws Exception
+     */
+    @Test
+    @WithMockUser(username = "John", authorities = {"STUDENT"})
+    public void getStudentLoads() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/professor"))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = result.getResponse();
+        assertNotNull(mockHttpServletResponse);
+        assertNotNull(mockHttpServletResponse.getForwardedUrl());
+        assertEquals("/accessdenied", mockHttpServletResponse.getForwardedUrl());
+    }
+
+    /**
+     * Tests that a professor cannot access /professor page
+     * @throws Exception
+     */
+    @Test
+    @WithMockUser(username = "John", authorities = {"PROFESSOR"})
+    public void testProfessorAccess() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/professor"))
+                .andExpect(status().isOk())
+                .andReturn();
+        ModelAndView modelAndView = result.getModelAndView();
+        assertNotNull(modelAndView);
+        assertNotNull(modelAndView.getViewName());
+        assertEquals("professor", modelAndView.getViewName());
+    }
+
+    /**
+     * Tests that annonymous users cannot access /professor page
+     * @throws Exception
+     */
+    @Test
+    @WithAnonymousUser
+    public void testAnonymousAccess() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/professor"))
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = result.getResponse();
+        assertNotNull(mockHttpServletResponse);
+        assertNotNull(mockHttpServletResponse.getRedirectedUrl());
+        assertTrue( mockHttpServletResponse.getRedirectedUrl().endsWith("/login"));
     }
 }

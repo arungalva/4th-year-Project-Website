@@ -5,6 +5,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpServletResponse;
+import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -21,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ContextConfiguration
 public class StudentControllerTest {
 
     @Autowired
@@ -31,6 +36,7 @@ public class StudentControllerTest {
      * @throws Exception
      */
     @Test
+    @WithMockUser(username = "John", authorities = {"STUDENT"})
     public void getStudentLoads() throws Exception {
         MvcResult result = this.mockMvc.perform(get("/student"))
                 .andExpect(status().isOk())
@@ -41,4 +47,37 @@ public class StudentControllerTest {
         assertNotNull(modelAndView.getViewName());
         assertEquals("student", modelAndView.getViewName());
     }
+
+    /**
+     * Tests that a professor cannot access /student page
+     * @throws Exception
+     */
+    @Test
+    @WithMockUser(username = "John", authorities = {"PROFESSOR"})
+    public void testProfessorAccess() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/student"))
+                .andExpect(status().is4xxClientError())
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = result.getResponse();
+        assertNotNull(mockHttpServletResponse);
+        assertNotNull(mockHttpServletResponse.getForwardedUrl());
+        assertEquals("/accessdenied", mockHttpServletResponse.getForwardedUrl());
+    }
+
+    /**
+     * Tests that annonymous users cannot access /student page
+     * @throws Exception
+     */
+    @Test
+    @WithAnonymousUser
+    public void testAnonymousAccess() throws Exception {
+        MvcResult result = this.mockMvc.perform(get("/student"))
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = result.getResponse();
+        assertNotNull(mockHttpServletResponse);
+        assertNotNull(mockHttpServletResponse.getRedirectedUrl());
+        assertTrue( mockHttpServletResponse.getRedirectedUrl().endsWith("/login"));
+    }
+
 }
