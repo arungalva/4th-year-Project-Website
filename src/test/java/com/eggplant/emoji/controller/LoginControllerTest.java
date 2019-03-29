@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.Matchers.containsString;
@@ -16,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,8 +50,10 @@ public class LoginControllerTest {
 
     @Test
     public void testPostLogin() throws Exception {
-        mockMvc
-                .perform(formLogin());
+        RequestBuilder requestBuilder = formLogin().user("username").password("password");
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isFound());
 
     }
 }
