@@ -32,14 +32,14 @@
                 <input type="number" name="max-students" placeholder="5" th:field="*{maxNumberOfStudents}">
             </div>
         </div>
-        <div class="grouped fields">
+        <div class="field">
             <label>Program Restrictions</label>
-            <div class="field" th:each="program:${programs}">
-                <div class="ui checkbox">
-                    <input type="checkbox" th:field="*{programRestrictions}" name="project_restrictions" th:value="${program}">
-                    <label th:text="${program.programName}"></label>
+            <select class="ui fluid search dropdown" multiple="" th:field="*{programRestrictions}" name="project_restrictions" th:value="${program}">
+                <option value="">Program Restrictions</option>
+                <div class="field" th:each="program:${programs}">
+                    <option th:value="${program.id}" th:text="${program.programName}"></option>
                 </div>
-            </div>
+            </select>
         </div>
         <div style="display: none;">
             <input type="number" name="project-id" th:placeholder="${project.id}" th:field="*{id}">

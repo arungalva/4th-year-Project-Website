@@ -2,15 +2,12 @@ package com.eggplant.emoji.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "program")
 public class Program {
-//    BIOMEDICAL_ELECTRICAL("Biomedical Electrical", "BE"),
-//    COMMUNICATION_ENGINEERING("Communication Engineering", "CE"),
-//    COMPUTER_SYSTEMS_ENGINEERING("Computer Systems Engineering", "CSE"),
-//    SOFTWARE_ENGINEERING("Software Engineering", "SE"),
-//    ELECTRICAL_ENGINEERING("Electrical Engineering", "EE");
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +19,12 @@ public class Program {
     @NotNull
     private String programCode;
 
-    Program(String programName, String programCode) {
+    @ManyToMany(mappedBy = "programRestrictions")
+    private Collection<Project> projects;
+
+    public Program(){this("Default","Default");}
+
+    public Program(String programName, String programCode) {
         this.programName = programName;
         this.programCode = programCode;
     }
@@ -36,6 +38,20 @@ public class Program {
     public String getProgramCode() { return programCode; }
     public void setProgramCode(String programCode) { this.programCode = programCode; }
 
+    public Collection<Project> getProjects() { return projects; }
+    public void setProjects(Collection<Project> projects) { this.projects = projects; }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Program program = (Program) obj;
+        return Objects.equals(id, program.id) &&
+                Objects.equals(programName, program.programName) &&
+                Objects.equals(programCode, program.programCode);
+    }
 }

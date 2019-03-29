@@ -28,7 +28,11 @@
             <tr th:each="project: ${projects}">
                 <td rowspan="1" th:text="${project.id}"></td>
                 <td rowspan="1" th:text="${project.projectName}"></td>
-                <td rowspan="1">SE</td>
+                <td rowspan="1">
+                    <div class="ui labels">
+                        <div class="ui label" th:each="program: ${project.programRestrictions}" th:text="${program.programCode}"></div>
+                    </div>
+                </td>
                 <td rowspan="1">
                     <a th:href="'/project/edit?id=' + ${project.id}">
                         <div class="ui vertical animated blue button" tabindex="0">

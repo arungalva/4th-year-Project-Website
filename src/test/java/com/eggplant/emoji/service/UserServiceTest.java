@@ -97,14 +97,6 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetAllPrograms() {
-        Program[] actualAllPrograms = service.getAllPrograms();
-        Program[] expectedAllPrograms = Program.values();
-
-        assertArrayEquals(actualAllPrograms, expectedAllPrograms);
-    }
-
-    @Test
     public void testUniqueEmailExceptionRaised() {
         exception.expect(org.springframework.dao.DataIntegrityViolationException.class);
         u = new User();
@@ -130,8 +122,6 @@ public class UserServiceTest {
             repo.delete(u);
             throw e;
         }
-
-
     }
 
     @After

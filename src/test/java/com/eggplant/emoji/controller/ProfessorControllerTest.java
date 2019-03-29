@@ -1,7 +1,10 @@
 package com.eggplant.emoji.controller;
 
+import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
+import com.eggplant.emoji.service.ProgramService;
 import com.eggplant.emoji.service.ProjectService;
+import org.assertj.core.util.Arrays;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import org.hamcrest.Matchers;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import static org.hamcrest.Matchers.containsString;
+
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -35,6 +39,9 @@ public class ProfessorControllerTest {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private ProgramService programService;
 
 
     /**
@@ -61,6 +68,8 @@ public class ProfessorControllerTest {
     public void addProject() throws Exception {
         String projectName = "addProjectTest name";
         String projectDescription = "addProjectTest description";
+        List<Program> programs = programService.findAll();
+        List<String> programIdString = programService.findAll().stream().map(program -> program.getId().toString()).collect(Collectors.toList());
 
         try {
             MvcResult result = this.mockMvc.perform(post("/project/add")
@@ -68,9 +77,7 @@ public class ProfessorControllerTest {
                     .param("description",projectDescription)
                     .param("minNumberOfStudents","2")
                     .param("maxNumberOfStudents","5")
-                    .param("programRestrictions", "BIOMEDICAL_ELECTRICAL",
-                                                                "ELECTRICAL_ENGINEERING",
-                                                                "COMPUTER_SYSTEMS_ENGINEERING"))
+                    .param("programRestrictions", programIdString.toArray(new String[0])))
                     .andExpect(status().isFound())
                     .andReturn();
             ModelAndView modelAndView = result.getModelAndView();
@@ -84,6 +91,9 @@ public class ProfessorControllerTest {
             assertEquals(projectDescription, addedProject.getDescription());
             assertEquals(2, addedProject.getMinNumberOfStudents());
             assertEquals(5, addedProject.getMaxNumberOfStudents());
+            assertTrue(programs.size() == addedProject.getProgramRestrictions().size() &&
+                    programs.containsAll(addedProject.getProgramRestrictions()) &&
+                    addedProject.getProgramRestrictions().containsAll(programs));
 
             //remove the project that we tested
             this.projectService.removeProjectByName(projectName);

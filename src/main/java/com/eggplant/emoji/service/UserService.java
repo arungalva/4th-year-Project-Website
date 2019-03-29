@@ -3,6 +3,7 @@ package com.eggplant.emoji.service;
 import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Role;
 import com.eggplant.emoji.entities.User;
+import com.eggplant.emoji.repository.ProgramRepository;
 import com.eggplant.emoji.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -36,9 +37,5 @@ public class UserService {
 
     public Role[] getAllRoles(){
         return Role.values();
-    }
-
-    public Program[] getAllPrograms() {
-        return Program.values();
     }
 }

@@ -2,11 +2,7 @@ package com.eggplant.emoji.entities;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.EnumSet;
-import java.util.Date;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -35,12 +31,14 @@ public class Project extends Auditable<String> {
     @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     private int maxNumberOfStudents;
 
-    @ElementCollection(targetClass = Program.class)
-    @CollectionTable(name = "project_programRestriction",
-            joinColumns = @JoinColumn(name = "project_id"))
-    @Enumerated(EnumType.STRING)
-    @Column(name = "program_id")
-    private Set<Program> programRestrictions;
+    @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    @JoinTable(
+            name = "Program_Restrictions",
+            joinColumns = @JoinColumn(
+                    name = "project_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(
+                    name = "program_id", referencedColumnName = "id"))
+    private Collection<Program> programRestrictions;
 
     @NotNull
     @OneToMany(mappedBy="project", cascade = CascadeType.ALL)
@@ -81,8 +79,8 @@ public class Project extends Auditable<String> {
     public List<User> getStudents() { return this.students; }
     public void setStudents(List<User> students) { this.students = students; }
 
-    public Set<Program> getProgramRestrictions() { return this.programRestrictions; }
-    public void setProgramRestrictions(Set<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
+    public Collection<Program> getProgramRestrictions() { return this.programRestrictions; }
+    public void setProgramRestrictions(Collection<Program> programRestrictions) { this.programRestrictions = programRestrictions; }
 
     public Date getArchivedDate() { return this.archivedDate; }
     public void setArchivedDate(Date date) { this.archivedDate = date; }

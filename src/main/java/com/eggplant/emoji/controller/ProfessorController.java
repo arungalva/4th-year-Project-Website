@@ -2,6 +2,8 @@ package com.eggplant.emoji.controller;
 
 import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
+import com.eggplant.emoji.repository.ProgramRepository;
+import com.eggplant.emoji.service.ProgramService;
 import com.eggplant.emoji.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,9 @@ public class ProfessorController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private ProgramService programService;
 
     /**
      * GET request that returns the professor view
@@ -77,7 +82,7 @@ public class ProfessorController {
     @GetMapping("/project/add")
     public String getAddProject(Model model){
         model.addAttribute("project", new Project());
-        model.addAttribute("programs", EnumSet.allOf(Program.class));
+        model.addAttribute("programs", programService.findAll());
         return "addproject";
     }
 
@@ -106,7 +111,7 @@ public class ProfessorController {
     public String getEditProject(@RequestParam("id") Long projectId, Model model){
         Project existingProject = projectService.findById(projectId);
         model.addAttribute("project", existingProject);
-        model.addAttribute("programs", EnumSet.allOf(Program.class));
+        model.addAttribute("programs", programService.findAll());
         return "editproject";
     }
 
