@@ -36,10 +36,6 @@ public class ProfessorControllerTest {
     @Autowired
     private ProjectService projectService;
 
-    @After
-    public void tearDown() {
-        projectService.removeAllProjects();
-    }
 
     /**
      * Tests if the /project/add page loads correctly

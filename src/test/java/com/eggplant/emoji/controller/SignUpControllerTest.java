@@ -31,11 +31,6 @@ public class SignUpControllerTest {
     @Autowired
     private UserService userService;
 
-    @After
-    public void tearDown() {
-        userService.removeAllUsers();
-    }
-
     /**
      * Sends a POST request with a new project and tests if that project was added to the database
      * @throws Exception

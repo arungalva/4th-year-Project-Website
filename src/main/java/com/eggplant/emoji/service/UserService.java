@@ -34,13 +34,6 @@ public class UserService {
         repo.delete(u);
     }
 
-    public void removeAllUsers() {
-        List<User> allusers = repo.findAll();
-        for(int i = 0; i < allusers.size(); i++) {
-            repo.delete(allusers.get(i));
-        }
-    }
-
     public Role[] getAllRoles(){
         return Role.values();
     }

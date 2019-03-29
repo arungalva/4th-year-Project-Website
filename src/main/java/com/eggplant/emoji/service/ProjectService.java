@@ -46,11 +46,4 @@ public class ProjectService {
         repository.deleteProjectByProjectName(name);
     }
 
-    public void removeAllProjects() {
-        List<Project> allProjects = this.findAll();
-        for(int i = 0; i < allProjects.size(); i++) {
-            repository.delete(allProjects.get(i));
-        }
-    }
-
 }
