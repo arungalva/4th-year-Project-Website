@@ -5,9 +5,9 @@ package com.eggplant.emoji.entities;
  */
 public enum Role {
 
-    //Todo: Need to add COORDINATOR role as well
     STUDENT("STUDENT"),
-    PROFESSOR("PROFESSOR");
+    PROFESSOR("PROFESSOR"),
+    COORDINATOR("COORDINATOR");
 
     private String value;
 

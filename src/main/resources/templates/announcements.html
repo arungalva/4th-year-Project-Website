@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>4th-Year-Project</title>
 
@@ -24,13 +24,13 @@
             <div th:if="${not #lists.isEmpty(announcements)}">
                 <div th:each="announcement: ${announcements}">
                     <div class="item">
-                        <form action="/announcement/delete" method="POST" class="inline">
+                        <form sec:authorize="hasAuthority('COORDINATOR')" action="/announcement/delete" method="POST" class="inline">
                             <input name="id" type="hidden" th:value="${announcement.id}">
                             <button type="submit" class="link-button">
                                 <i class="red trash alternate outline icon"></i>
                             </button>
                         </form>
-                        <a th:href="'/announcement/edit?id=' + ${announcement.id}">
+                        <a sec:authorize="hasAuthority('COORDINATOR')" th:href="'/announcement/edit?id=' + ${announcement.id}">
                             <i class="edit outline icon"></i>
                         </a>
                         <i class="bell outline icon"></i>
@@ -40,18 +40,21 @@
                 </div>
             </div>
         </div>
-        <div class="ui hidden divider"></div>
-        <div>
-            <a href="/announcement/add">
-                <div class="ui floated small primary labeled icon button">
-                    <i class="plus circle icon"></i>Add Announcement
-                </div>
-            </a>
+        <div sec:authorize="hasAuthority('COORDINATOR')">
+            <div class="ui hidden divider"></div>
+            <div>
+                <a href="/announcement/add">
+                    <div class="ui floated small primary labeled icon button">
+                        <i class="plus circle icon"></i>Add Announcement
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 </div>
 <div th:insert="fragments/footer :: footer"></div>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script></body>
 </body>
 </html>

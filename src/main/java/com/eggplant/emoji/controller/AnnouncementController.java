@@ -3,6 +3,7 @@ package com.eggplant.emoji.controller;
 import com.eggplant.emoji.entities.Announcement;
 import com.eggplant.emoji.service.AnnouncementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -35,6 +36,7 @@ public class AnnouncementController {
      * @return addannouncement view used to create a new announcement
      */
     @GetMapping("/announcement/add")
+    @PreAuthorize("hasAuthority('COORDINATOR')")
     public String getAddAnnouncement(Model model){
         model.addAttribute("announcement", new Announcement());
         return "addannouncement";
@@ -47,6 +49,7 @@ public class AnnouncementController {
      * @return editannouncement view used to edit an announcement
      */
     @GetMapping("/announcement/edit")
+    @PreAuthorize("hasAuthority('COORDINATOR')")
     public String getEditAnnouncement(@RequestParam("id") Long announcementId, Model model){
         model.addAttribute("announcement", announcementService.findById(announcementId));
         return "editannouncement";
@@ -60,6 +63,7 @@ public class AnnouncementController {
      */
     @PostMapping("/announcement/add")
     @Transactional
+    @PreAuthorize("hasAuthority('COORDINATOR')")
     public ModelAndView postAddAnnouncement(@ModelAttribute Announcement announcement, Model model){
         announcementService.addAnnouncement(announcement);
         model.addAttribute("announcements", announcementService.findAll());
@@ -74,6 +78,7 @@ public class AnnouncementController {
      */
     @PostMapping("/announcement/edit")
     @Transactional
+    @PreAuthorize("hasAuthority('COORDINATOR')")
     public ModelAndView postEditAnnouncement(@ModelAttribute Announcement announcement, Model model){
         announcementService.updateAnnouncement(announcement);
         model.addAttribute("announcements", announcementService.findAll());
@@ -88,6 +93,7 @@ public class AnnouncementController {
      */
     @PostMapping("/announcement/delete")
     @Transactional
+    @PreAuthorize("hasAuthority('COORDINATOR')")
     public ModelAndView removeAnnouncement(HttpServletRequest request, Model model){
         Long announcementId = Long.parseLong(request.getParameter("id"));
         announcementService.removeAnnouncementById(announcementId);
