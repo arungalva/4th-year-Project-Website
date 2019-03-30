@@ -14,7 +14,7 @@ public class AnnouncementService {
     @Autowired
     private AnnouncementRepository announcementRepository;
 
-    public List<Announcement> findAll() { return announcementRepository.findAllByOrderByIdAsc(); }
+    public List<Announcement> findAll() { return announcementRepository.findAllByOrderByIdDesc(); }
 
     public Announcement findById(Long id) {
         if(announcementRepository.findById(id).isPresent()){

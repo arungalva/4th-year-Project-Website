@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AnnouncementRepository extends CrudRepository<Announcement, Long> {
     Announcement findByDescription(String description);
-    List<Announcement> findAllByOrderByIdAsc();
+    List<Announcement> findAllByOrderByIdDesc();
 
     @Modifying
     @Transactional
