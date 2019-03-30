@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>4th-Year-Project</title>
+
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div th:insert="fragments/homeheader :: homeheader"></div>
+
+<div class="ui main container">
+    <div class="center main">
+        <div class="ui horizontal divider">
+            <i class="bullhorn icon"></i>
+            2018/2019 Project Notices
+        </div>
+    </div>
+    <div>
+        <div class="ui list">
+            <div th:if="${not #lists.isEmpty(announcements)}">
+                <div th:each="announcement: ${announcements}">
+                    <div class="item">
+                        <form action="/announcement/delete" method="POST" class="inline">
+                            <input name="id" type="hidden" th:value="${announcement.id}">
+                            <button type="submit" class="link-button">
+                                <i class="red trash alternate outline icon"></i>
+                            </button>
+                        </form>
+                        <a th:href="'/announcement/edit?id=' + ${announcement.id}">
+                            <i class="edit outline icon"></i>
+                        </a>
+                        <i class="bell outline icon"></i>
+                        <span class="content" th:text="${announcement.description}"></span>
+                    </div>
+                    <div class="ui section divider"></div>
+                </div>
+            </div>
+        </div>
+        <div class="ui hidden divider"></div>
+        <div>
+            <a href="/announcement/add">
+                <div class="ui floated small primary labeled icon button">
+                    <i class="plus circle icon"></i>Add Announcement
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+<div th:insert="fragments/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+</body>
+</html>

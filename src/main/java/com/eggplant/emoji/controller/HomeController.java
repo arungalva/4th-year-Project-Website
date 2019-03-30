@@ -21,9 +21,4 @@ public class HomeController {
         return "deadlines";
     }
 
-    @GetMapping("/notices")
-    public String notices() {
-        return "notices";
-    }
-
 }
