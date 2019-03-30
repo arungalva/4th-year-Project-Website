@@ -21,4 +21,7 @@ public class HomeController {
         return "deadlines";
     }
 
+    @GetMapping("/accessdenied")
+    public String accessdenied() { return "accessdenied"; }
+
 }
