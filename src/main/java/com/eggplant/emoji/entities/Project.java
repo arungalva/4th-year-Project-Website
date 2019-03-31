@@ -101,6 +101,7 @@ public class Project extends Auditable<String> {
 //            return false;
 //        }
         this.students.add(student);
+        student.setProject(this);
         return true;
     }
 
@@ -115,7 +116,6 @@ public class Project extends Auditable<String> {
     public void archiveProject() {
         this.archivedDate = new Date();
     }
-
 
     @Override
     public String toString() {

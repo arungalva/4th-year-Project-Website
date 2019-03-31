@@ -12,22 +12,29 @@
 
 <div th:insert="fragments/header :: header"></div>
 <div class="ui main container">
-    <h1 class="ui header">Student Overview</h1>
+    <h1 class="ui header" th:text="'Overview for ' + ${name}"></h1>
     <table style="overflow-x:auto;" class="ui celled structured stackable table projects">
         <tbody>
             <div>
-                <td>Hello DUMMY_NAME, you are a student. Your student ID is 100100100.</td>
+                <tr><td>
+                    <p th:text="'Student ID: ' + ${id}"></p>
+                    <p th:text="'Email: ' + ${email}"></p>
+                </td></tr>
             </div>
-        </tbody>
-        <tbody>
+            <div th:if="${project != null}">
+                <tr><td> 
+                    <p th:text="'You have joined project ' + ${project.id} + ': ' + ${project.projectName}"></p>
+                    <p th:if="${otherStudents != null}" th:text="'Other students who have joined this project: ' + ${otherStudents}"></p>
+                    <p th:if="${otherStudents == null}">No other students have joined this project.</p>
+                </td></tr>
+            </div>
+            <div th:if="${project == null}">
+                <tr><td>You are not currently registered to a project. Visit the <a href='/projects'>projects page</a> to register for a project.</td></tr>
             <div>
-                <tr><td>You have joined the project: <b>Eggplant Emoji</b></td></tr>
-                <tr><td>Other students who have joined this project: Babak Esfandiari, Mike Vezina, and the other TAs</td></tr>
-            </div>
         </tbody>
         <tfoot class="full-width">
         <tfoot class="full-width">
-        <tr>
+        <tr th:if="${project != null}">
             <th colspan="7">
                 <a href="#">
                     <div class="ui floated small primary labeled icon button">
