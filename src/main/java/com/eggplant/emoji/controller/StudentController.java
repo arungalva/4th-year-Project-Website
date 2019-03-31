@@ -33,6 +33,9 @@ public class StudentController {
     public String index(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User student = userService.getUserByEmail(authentication.getName());
+        if (student == null) {
+            return "student";
+        }
         Project project = student.getProject();
         model.addAttribute("name", student.getFullName());
         model.addAttribute("id", Integer.toString(student.getMemberId()));
