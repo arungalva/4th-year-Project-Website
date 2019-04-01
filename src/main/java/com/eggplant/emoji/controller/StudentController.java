@@ -33,23 +33,22 @@ public class StudentController {
     public String index(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User student = userService.getUserByEmail(authentication.getName());
-        if (student == null) {
-            return "student";
-        }
-        Project project = student.getProject();
-        model.addAttribute("name", student.getFullName());
-        model.addAttribute("id", Integer.toString(student.getMemberId()));
-        model.addAttribute("email", student.getEmail());
-        model.addAttribute("project", project);
-        if (project != null) {
-            String otherStudents = "";
-            for (User otherStudent : project.getStudents()) {
-                if (otherStudent != student) {
-                    otherStudents += otherStudent.getFirstName() + " " + otherStudent.getLastName() + ", ";
+        if (student != null) {
+            Project project = student.getProject();
+            model.addAttribute("name", student.getFullName());
+            model.addAttribute("id", Integer.toString(student.getMemberId()));
+            model.addAttribute("email", student.getEmail());
+            model.addAttribute("project", project);
+            if (project != null) {
+                String otherStudents = "";
+                for (User otherStudent : project.getStudents()) {
+                    if (otherStudent != student) {
+                        otherStudents += otherStudent.getFirstName() + " " + otherStudent.getLastName() + ", ";
+                    }
                 }
-            }
-            if (!otherStudents.equals("")) {
-                model.addAttribute("otherStudents", otherStudents.substring(0, otherStudents.length() - 2));
+                if (!otherStudents.equals("")) {
+                    model.addAttribute("otherStudents", otherStudents.substring(0, otherStudents.length() - 2));
+                }
             }
         }
         return "student";

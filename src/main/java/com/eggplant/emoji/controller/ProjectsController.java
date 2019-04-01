@@ -32,11 +32,10 @@ public class ProjectsController {
         model.addAttribute("projects",allProjects);
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = userService.getUserByEmail(authentication.getName());
-        if (currentUser == null) {
-            return "projects";
+        if (currentUser != null) {
+            model.addAttribute("role", currentUser.getRole().toString());
+            model.addAttribute("currentProject", currentUser.getProject());
         }
-        model.addAttribute("role", currentUser.getRole().toString());
-        model.addAttribute("currentProject", currentUser.getProject());
         return "projects";
     }
 
