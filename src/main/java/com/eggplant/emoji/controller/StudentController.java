@@ -63,7 +63,7 @@ public class StudentController {
     public String getJoinProject(Model model, @RequestParam("id") Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User student = userService.getUserByEmail(authentication.getName());
-        if (student.getProject() == null) {
+        if (student != null && student.getProject() == null) {
             Project project = projectService.getProjectByID(id);
             project.addStudent(student);
             projectService.updateProject(project);
