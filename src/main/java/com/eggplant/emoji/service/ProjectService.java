@@ -34,13 +34,11 @@ public class ProjectService {
         return true;
     }
 
-    public List<Project> getAllNonArchivedProjects() {
-        return repository.findAllByArchivedDateNull();
-    };
+    public List<Project> getAllNonArchivedProjects() { return repository.findAllByArchivedDateNull();}
 
     public List<Project> getAllArchivedProjects() {
-        return repository.findAllByArchivedDateNotNull();
-    };
+        return repository.findAllByArchivedDateNotNullOrderByIdAsc();
+    }
 
     public Project getProjectByName(String name) {
         return repository.findByProjectName(name);
