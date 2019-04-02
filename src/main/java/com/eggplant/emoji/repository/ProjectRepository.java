@@ -15,11 +15,7 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
     @Transactional
     void deleteProjectByProjectName(String projectName);
 
-    @Modifying
-    @Transactional
     List<Project> findAllByArchivedDateNull();
 
-    @Modifying
-    @Transactional
     List<Project> findAllByArchivedDateNotNullOrderByIdAsc();
 }
