@@ -35,7 +35,7 @@ public class Project extends Auditable<String> {
     @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     private int maxNumberOfStudents;
 
-    @ElementCollection(targetClass = Program.class)
+    @ElementCollection(targetClass = Program.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "project_programRestriction",
             joinColumns = @JoinColumn(name = "project_id"))
     @Enumerated(EnumType.STRING)
