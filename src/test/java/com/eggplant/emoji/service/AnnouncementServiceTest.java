@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,6 +28,27 @@ public class AnnouncementServiceTest {
         // verify it got saved
         Announcement ann = announcementService.findById(dummyAnnouncement.getId());
         assertTrue(ann.getDescription().equals(dummyAnnouncement.getDescription()));
+
+        //remove the announcement
+        announcementService.removeAnnouncementById(dummyAnnouncement.getId());
+    }
+
+    @Test
+    public void test_edit_announcement(){
+        String testDescription = "Integration Add Test Announcement";
+        String editedTestDescription = "(edited) Integration Add Test Announcement";
+        Announcement dummyAnnouncement = new Announcement();
+        dummyAnnouncement.setDescription(testDescription);
+
+        announcementService.addAnnouncement(dummyAnnouncement);
+
+        //edit
+        dummyAnnouncement.setDescription(editedTestDescription);
+        announcementService.updateAnnouncement(dummyAnnouncement);
+
+        // verify it got saved
+        Announcement ann = announcementService.findById(dummyAnnouncement.getId());
+        assertEquals(editedTestDescription, ann.getDescription());
 
         //remove the announcement
         announcementService.removeAnnouncementById(dummyAnnouncement.getId());
