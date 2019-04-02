@@ -82,7 +82,7 @@ public class LoginControllerTest {
                 .param("role", role.toString())
                 .param("password", password))
                 .andExpect(status().isFound())
-                .andExpect(view().name("redirect:/projects"))
+                .andExpect(view().name("redirect:/"))
                 .andReturn();
 
         User signedUpUser = this.userService.getUserByEmail(email);
@@ -102,7 +102,7 @@ public class LoginControllerTest {
         mockMvc
                 .perform(logout())
                 .andExpect(status().isFound())
-                .andExpect(redirectedUrl("/login?logout"));
+                .andExpect(redirectedUrl("/"));
 
     }
 
