@@ -63,24 +63,6 @@ public class HomeControllerTest {
 	}
 
 	/**
-	 * Tests if the /notices page loads correctly
-	 * @throws Exception
-	 */
-	@Test
-	public void noticesPage() throws Exception {
-		MvcResult result = this.mockMvc.perform(get("/notices"))
-				.andExpect(status().isOk())
-				.andExpect(content().string(Matchers.containsString("2018/2019 Project Notices")))
-				.andReturn();
-		ModelAndView modelAndView = result.getModelAndView();
-		assertNotNull(modelAndView);
-		assertNotNull(modelAndView.getViewName());
-		assertEquals("notices", modelAndView.getViewName());
-
-	}
-
-
-	/**
 	 * Tests if the /projects page loads correctly
 	 * @throws Exception
 	 */
