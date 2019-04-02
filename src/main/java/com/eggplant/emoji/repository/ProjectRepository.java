@@ -21,6 +21,5 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
 
     @Modifying
     @Transactional
-    List<Project> findAllByArchivedDateNotNull();
-
+    List<Project> findAllByArchivedDateNotNullOrderByIdAsc();
 }
