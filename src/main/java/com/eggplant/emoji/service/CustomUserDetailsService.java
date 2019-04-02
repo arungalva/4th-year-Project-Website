@@ -2,6 +2,8 @@ package com.eggplant.emoji.service;
 
 import com.eggplant.emoji.entities.Role;
 import com.eggplant.emoji.entities.User;
+import com.eggplant.emoji.repository.UserRepository;
+import com.eggplant.emoji.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +24,6 @@ public class CustomUserDetailsService  implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.getUserByEmail(email);
-        System.out.println(user.getRole().name());
         if (user == null) {
             return new org.springframework.security.core.userdetails.User(
                     " ", " ", true, true, true,

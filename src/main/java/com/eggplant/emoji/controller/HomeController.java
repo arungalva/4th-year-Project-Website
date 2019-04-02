@@ -26,4 +26,7 @@ public class HomeController {
         return "notices";
     }
 
+    @GetMapping("/accessdenied")
+    public String accessdenied() { return "accessdenied"; }
+
 }

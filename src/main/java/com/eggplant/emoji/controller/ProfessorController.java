@@ -4,6 +4,7 @@ import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,6 +32,7 @@ public class ProfessorController {
      * @return professor view
      */
     @GetMapping("/professor")
+    @PreAuthorize("hasAuthority('PROFESSOR')")
     public String index(Model model){
         List<Project> allProjects = projectService.getAllNonArchivedProjects();
         model.addAttribute("projects",allProjects);

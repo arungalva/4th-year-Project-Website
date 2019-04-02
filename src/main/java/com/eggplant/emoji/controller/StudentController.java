@@ -1,5 +1,6 @@
 package com.eggplant.emoji.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ public class StudentController {
      * @return student view
      */
     @GetMapping("/student")
+    @PreAuthorize("hasAuthority('STUDENT')")
     public String index(Model model){
         return "student";
     }
