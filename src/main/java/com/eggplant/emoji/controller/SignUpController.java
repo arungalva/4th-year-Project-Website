@@ -4,6 +4,8 @@ import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.entities.User;
 import com.eggplant.emoji.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -18,6 +20,7 @@ import javax.validation.Valid;
 
 
 @Controller
+@PreAuthorize("isAnonymous()")
 public class SignUpController {
 
     @Autowired
@@ -40,6 +43,6 @@ public class SignUpController {
             return "signup";
         }
         userService.createAccount(user);
-        return "redirect:/projects";
+        return "redirect:/";
     }
 }

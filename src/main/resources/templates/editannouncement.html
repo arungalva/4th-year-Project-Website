@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add Project</title>
+
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div th:insert="fragments/homeheader :: homeheader"></div>
+<div class="ui main container">
+    <h1 class="ui header" th:text="'Edit Announcement #' + ${announcement.id}">Edit Announcement</h1>
+
+    <form class="ui form" th:action="@{/announcement/edit}" th:object="${announcement}" method="post">
+        <div class="field">
+            <label>Description</label>
+            <textarea name="description"  th:field="*{description}"></textarea>
+        </div>
+        <div style="display: none;">
+            <input type="number" name="announcement-id" th:placeholder="${announcement.id}" th:field="*{id}">
+        </div>
+        <button class="ui button primary" type="submit">Submit</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

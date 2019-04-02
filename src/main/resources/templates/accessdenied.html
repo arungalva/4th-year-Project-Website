@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Access Denied</title>
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+    <link rel="stylesheet" type="text/css" href="/css/fullpage.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h1 class="ui red header">Access Denied</h1>
+        <div class="ui message">
+            <h2 class="ui icon header">
+                <i class="lock icon"></i>
+                <div class="content">
+                    <h2 class="ui blue header">Whoops</h2>
+                    <div class="sub header">This URL is valid but you are not authorized for this content.</div>
+                </div>
+            </h2>
+            <p>You are currently signed in as:
+                <strong>
+                    <span sec:authentication="name"></span>
+                </strong>
+            </p>
+        </div>
+        <div class="ui message">
+            Sign in as a different user? <a href="/logout">Logout</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>
