@@ -12,7 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.web.servlet.ModelAndView;
 
 import static org.hamcrest.Matchers.containsString;
@@ -22,16 +21,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-
 
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.entities.Role;
 import com.eggplant.emoji.entities.User;
+import com.eggplant.emoji.repository.ProjectRepository;
 import com.eggplant.emoji.repository.UserRepository;
-import com.eggplant.emoji.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,18 +38,12 @@ public class StudentControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    UserService service;
-    
+    UserRepository userRepo;
     @Autowired
-    UserRepository repo;
+    ProjectRepository projectRepo;
 
     private Project p;
     private User u;
-
-    private String dummyName = "Dummy";
-    private String dummyEmail = "dum@carleton.ca";
-    private int dummyMemberID = 100123122;
-    private String dummyPassword = "password";
 
     /**
      * Tests if the /student page loads correctly
@@ -110,28 +99,33 @@ public class StudentControllerTest {
      * @throws Exception
      */
     @Test
+    @WithMockUser(username = "dummy@carleton.ca", password = "password", roles = "STUDENT")
     public void joinProject() throws Exception {
+        u = new User();
         p = new Project();
-        p.setId((long) 3);
-        this.mockMvc.perform(post("/signup")
-        .param("firstName", this.dummyName)
-        .param("lastName", this.dummyName)
-        .param("email", this.dummyEmail)
-        .param("memberId", Integer.toString(this.dummyMemberID))
-        .param("role", Role.STUDENT.toString())
-        .param("password", this.dummyPassword))
-        .andExpect(status().isFound())
-        .andReturn();
+        p.setProjectName("projectName");
+        u.setFirstName("firstName");
+        u.setLastName("lastName");
+        u.setMemberId(101321123);
+        u.setEmail("dummy@carleton.ca");
+        u.setPassword("password");
+        u.setRole(Role.STUDENT.name());
 
-        u = repo.findByEmail(this.dummyEmail);
+        assertTrue(u.getProject() == null);
 
-        RequestBuilder requestBuilder = formLogin().user(u.getEmail()).password(u.getPassword());
-        this.mockMvc.perform(requestBuilder)
-                .andDo(print())
-                .andExpect(status().isFound());
+        userRepo.save(u);
+        projectRepo.save(p);
+
+        p = projectRepo.findByProjectName("projectName");
 
         this.mockMvc.perform(get("/joinproject")
             .param("id", p.getId().toString()))
             .andReturn();
+
+        u = userRepo.findByEmail("dummy@carleton.ca");
+        assertTrue(u.getProject() != null);
+
+        projectRepo.delete(p);
+        userRepo.delete(u);
     }
 }
