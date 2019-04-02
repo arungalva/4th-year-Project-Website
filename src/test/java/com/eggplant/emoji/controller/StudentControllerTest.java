@@ -22,6 +22,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.eggplant.emoji.entities.Project;
+import com.eggplant.emoji.entities.Role;
+import com.eggplant.emoji.entities.User;
+import com.eggplant.emoji.repository.ProjectRepository;
+import com.eggplant.emoji.repository.UserRepository;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -30,6 +36,14 @@ public class StudentControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    UserRepository userRepo;
+    @Autowired
+    ProjectRepository projectRepo;
+
+    private Project p;
+    private User u;
 
     /**
      * Tests if the /student page loads correctly
@@ -80,4 +94,38 @@ public class StudentControllerTest {
         assertTrue( mockHttpServletResponse.getRedirectedUrl().endsWith("/login"));
     }
 
+    /**
+     * Tests if the a student can join a project and have that persisted
+     * @throws Exception
+     */
+    @Test
+    @WithMockUser(username = "dummy@carleton.ca", password = "password", roles = "STUDENT")
+    public void joinProject() throws Exception {
+        u = new User();
+        p = new Project();
+        p.setProjectName("projectName");
+        u.setFirstName("firstName");
+        u.setLastName("lastName");
+        u.setMemberId(101321123);
+        u.setEmail("dummy@carleton.ca");
+        u.setPassword("password");
+        u.setRole(Role.STUDENT.name());
+
+        assertTrue(u.getProject() == null);
+
+        userRepo.save(u);
+        projectRepo.save(p);
+
+        p = projectRepo.findByProjectName("projectName");
+
+        this.mockMvc.perform(get("/joinproject")
+            .param("id", p.getId().toString()))
+            .andReturn();
+
+        u = userRepo.findByEmail("dummy@carleton.ca");
+        assertTrue(u.getProject() != null);
+
+        projectRepo.delete(p);
+        userRepo.delete(u);
+    }
 }

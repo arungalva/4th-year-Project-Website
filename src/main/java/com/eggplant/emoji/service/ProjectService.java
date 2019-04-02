@@ -34,9 +34,13 @@ public class ProjectService {
         return true;
     }
 
-    public List<Project> getAllNonArchivedProjects() { return repository.findAllByArchivedDateNull();};
-    public List<Project> getAllArchivedProjects() { return repository.findAllByArchivedDateNotNull();};
+    public List<Project> getAllNonArchivedProjects() {
+        return repository.findAllByArchivedDateNull();
+    };
 
+    public List<Project> getAllArchivedProjects() {
+        return repository.findAllByArchivedDateNotNull();
+    };
 
     public Project getProjectByName(String name) {
         return repository.findByProjectName(name);
@@ -46,4 +50,7 @@ public class ProjectService {
         repository.deleteProjectByProjectName(name);
     }
 
+    public Project getProjectByID(Long id) {
+        return repository.findById(id).get();
+    }
 }

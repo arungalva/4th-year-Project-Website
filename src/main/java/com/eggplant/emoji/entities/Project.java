@@ -35,7 +35,7 @@ public class Project extends Auditable<String> {
     @Max(MAXIMUM_NUMBER_OF_STUDENTS_FOR_ANY_PROJECT)
     private int maxNumberOfStudents;
 
-    @ElementCollection(targetClass = Program.class)
+    @ElementCollection(targetClass = Program.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "project_programRestriction",
             joinColumns = @JoinColumn(name = "project_id"))
     @Enumerated(EnumType.STRING)
@@ -101,6 +101,7 @@ public class Project extends Auditable<String> {
 //            return false;
 //        }
         this.students.add(student);
+        student.setProject(this);
         return true;
     }
 
@@ -115,7 +116,6 @@ public class Project extends Auditable<String> {
     public void archiveProject() {
         this.archivedDate = new Date();
     }
-
 
     @Override
     public String toString() {

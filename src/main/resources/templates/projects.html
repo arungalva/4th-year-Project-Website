@@ -19,17 +19,32 @@
     <table style="overflow-x:auto;" class="ui celled structured stackable table projects">
         <thead>
         <tr>
-            <th rowspan="2" class="left aligned">ID</th>
-            <th rowspan="2" class="left aligned">Title</th>
-            <th rowspan="2" class="left aligned">Program</th>
+            <th rowspan="2" class="center aligned">ID</th>
+            <th rowspan="2" class="center aligned">Title</th>
+            <th rowspan="2" class="center aligned">Max Number of Students</th>
+            <th rowspan="2" class="center aligned">Program Restrictions</th>
+            <th rowspan="2" class="center aligned">Current Students</th>
+            <th th:if="${role == 'STUDENT' && currentProject == null}" rowspan="2" class="center aligned">Join Project</th>
         </tr>
         </thead>
         <tbody>
         <div th:if="${not #lists.isEmpty(projects)}">
-            <tr th:each="project: ${projects}">
+            <tr th:each="project: ${projects}" class="center aligned">
                 <td rowspan="1" th:text="${project.id}"></td>
                 <td rowspan="1" th:text="${project.projectName}"></td>
-                <td rowspan="1">SE</td>
+                <td rowspan="1" th:text="${project.maxNumberOfStudents}"></td>
+                <td rowspan="1">
+                    <span th:each="program : ${project.programRestrictions}" th:text="${program.programCode + ' '}"></span>
+                </td>
+                <td rowspan="1">
+                    <th:block th:each="student : ${project.students}">
+                        <span th:text="${student.firstName + ' ' + student.lastName}"></span>
+                        <br>
+                    </th:block>
+                </td>
+                <td th:if="${role == 'STUDENT' && currentProject == null}" rowspan="1">
+                    <a th:if="${project.maxNumberOfStudents > #lists.size(project.students)}" th:href="${'/joinproject?id=' + project.id}"><i class="user plus icon"></i></a>
+                </td>
             </tr>
         </div>
         </tbody>

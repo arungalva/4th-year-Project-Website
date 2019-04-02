@@ -105,8 +105,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testUniqueEmailExceptionRaised() {
-        exception.expect(org.springframework.dao.DataIntegrityViolationException.class);
+    public void testUniqueEmailsRequired() {
         u = new User();
         u.setFirstName("Arun");
         u.setLastName("Galva");
@@ -123,15 +122,7 @@ public class UserServiceTest {
         duplicateEmailuser.setMemberId(100976197);
         duplicateEmailuser.setRole(Role.STUDENT.toString());
         duplicateEmailuser.setPassword("random password");
-
-        try {
-            service.createAccount(duplicateEmailuser);
-        } catch (Exception e) {
-            repo.delete(u);
-            throw e;
-        }
-
-
+        assertFalse(service.createAccount(duplicateEmailuser));
     }
 
     @After

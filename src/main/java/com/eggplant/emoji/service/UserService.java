@@ -19,10 +19,14 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void createAccount(User account) {
+    public Boolean createAccount(User account) {
+        if (repo.findByEmail(account.getEmail()) != null) {
+            return false;
+        }
         account.setEmail(account.getEmail().toLowerCase());
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         repo.save(account);
+        return true;
     }
 
     public User getUserByEmail(String email) {

@@ -92,4 +92,8 @@ public class User extends Auditable<String> {
     public void setRole(String role) {
        this.role = Role.valueOf(role.toUpperCase());
     }
+
+    public String getFullName() {
+        return this.firstName + ' ' + this.lastName;
+    }
 }
