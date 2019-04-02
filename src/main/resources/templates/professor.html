@@ -18,6 +18,7 @@
         <tr>
             <th rowspan="2" class="left aligned">ID</th>
             <th rowspan="2" class="left aligned">Title</th>
+            <th rowspan="2" class="center aligned">Max Number of Students</th>
             <th rowspan="2" class="left aligned">Program Restrictions</th>
             <th rowspan="2" class="left aligned">Edit</th>
             <th rowspan="2" class="left aligned">Archive</th>
@@ -28,6 +29,7 @@
             <tr th:each="project: ${projects}">
                 <td rowspan="1" th:text="${project.id}"></td>
                 <td rowspan="1" th:text="${project.projectName}"></td>
+                <td rowspan="1" th:text="${project.maxNumberOfStudents}"></td>
                 <td rowspan="1">
                     <span th:each="program : ${project.programRestrictions}" th:text="${program.programCode + ' '}"></span>
                 </td>
