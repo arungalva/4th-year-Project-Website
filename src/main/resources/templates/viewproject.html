@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title th:text="${project.projectName}"></title>
+
+    <link rel="stylesheet" type="text/css" href="/vendor/semantic.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/custom.css" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div th:insert="fragments/homeheader :: homeheader"></div>
+<div class="ui main container">
+    <h1 class="ui header" th:text="${project.projectName}"></h1>
+    <div class="ui hidden divider"></div>
+    <h3 class="ui header">Description</h3>
+    <p th:text="${project.description}"></p>
+    <div class="ui hidden divider"></div>
+    <b>Minimum Number of Students: </b> <span th:text="${project.minNumberOfStudents}"></span>
+    <br>
+    <b>Maximum Number of Students: </b> <span th:text="${project.maxNumberOfStudents}"></span>
+    <div class="ui hidden divider"></div>
+    <b>Available to students in: </b>
+    <br>
+    <div class="ui large label" th:each="program : ${project.programRestrictions}" th:text="${program.programName + ' '}"></div>
+
+    <div class="ui hidden divider"></div>
+
+    <div sec:authorize="hasAuthority('STUDENT')" th:if="${project.maxNumberOfStudents > #lists.size(project.students) && currentProject == null}">
+        <a class="ui button" th:href="${'/joinproject?id=' + project.id}"><i class="user plus icon"></i> Join Project</a>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+<script src="/vendor/semantic.min.js"></script>
+<script src="/js/custom.js"></script>
+</body>
+</html>

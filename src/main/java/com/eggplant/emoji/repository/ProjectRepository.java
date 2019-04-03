@@ -18,4 +18,8 @@ public interface ProjectRepository extends CrudRepository<Project, Long> {
     List<Project> findAllByArchivedDateNull();
 
     List<Project> findAllByArchivedDateNotNullOrderByIdAsc();
+
+    @Modifying
+    @Transactional
+    Project saveAndFlush(Project p);
 }

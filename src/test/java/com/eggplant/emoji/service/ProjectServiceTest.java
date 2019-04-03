@@ -1,5 +1,6 @@
 package com.eggplant.emoji.service;
 
+import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.repository.ProjectRepository;
 import org.junit.Test;
@@ -9,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -63,31 +66,52 @@ public class ProjectServiceTest {
         dummyProject2.setProjectName("Test archive2");
         dummyProject3.setProjectName("Test archive3");
 
-        service.addProject(dummyProject1);
-        service.addProject(dummyProject2);
-        service.addProject(dummyProject3);
+        Project p1 = service.addProject(dummyProject1);
+        Project p2 = service.addProject(dummyProject2);
+        Project p3 = service.addProject(dummyProject3);
 
-        assertNotNull(service.findById(dummyProject1.getId()));
-        assertNotNull(service.findById(dummyProject2.getId()));
-        assertNotNull(service.findById(dummyProject3.getId()));
+        assertNotNull(service.findById(p1.getId()));
+        assertNotNull(service.findById(p2.getId()));
+        assertNotNull(service.findById(p3.getId()));
 
-        assertNull(service.findById(dummyProject1.getId()).getArchivedDate());
-        assertNull(service.findById(dummyProject2.getId()).getArchivedDate());
-        assertNull(service.findById(dummyProject3.getId()).getArchivedDate());
+        assertNull(p1.getArchivedDate());
+        assertNull(p2.getArchivedDate());
+        assertNull(p3.getArchivedDate());
 
-        Project three = service.findById(dummyProject3.getId());
-        three.archiveProject();
-        service.updateProject(three);
-        assertNotNull(three.getArchivedDate());
+        p3.archiveProject();
+        service.updateProject(p3);
+        assertNotNull(p3.getArchivedDate());
 
-        Project one = service.findById(dummyProject1.getId());
-        one.archiveProject();
-        service.updateProject(one);
-        assertNotNull(one.getArchivedDate());
+        p1.archiveProject();
+        service.updateProject(p1);
+        assertNotNull(p1.getArchivedDate());
 
         List<Project> allarchivedprojects = service.getAllArchivedProjects();
         assertNotEquals(allarchivedprojects.size(), 0);
-        assertEquals(dummyProject1.getId(), allarchivedprojects.get(0).getId());
-        assertEquals(dummyProject3.getId(), allarchivedprojects.get(1).getId());
+        assertEquals(p1.getId(), allarchivedprojects.get(0).getId());
+        assertEquals(p3.getId(), allarchivedprojects.get(1).getId());
+
+        service.removeProjectByName(p1.getProjectName());
+        service.removeProjectByName(p2.getProjectName());
+        service.removeProjectByName(p3.getProjectName());
+
+    }
+
+    @Test
+    public void testSaveAndFlush(){
+        Project dummyProject = new Project();
+        dummyProject.setProjectName("Test Project for testing individual pages");
+        dummyProject.setDescription("This is a random project description");
+        dummyProject.setMinNumberOfStudents(2);
+        dummyProject.setMaxNumberOfStudents(5);
+        Set<Program> ProgramRestrictions = EnumSet.allOf(Program.class);
+        dummyProject.setProgramRestrictions(ProgramRestrictions);
+
+        Project p = service.addProject(dummyProject);
+
+        assertEquals(dummyProject, p);
+
+        service.removeProjectByName(p.getProjectName());
+
     }
 }

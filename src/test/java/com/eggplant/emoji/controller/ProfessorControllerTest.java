@@ -1,5 +1,6 @@
 package com.eggplant.emoji.controller;
 
+import com.eggplant.emoji.entities.Program;
 import com.eggplant.emoji.entities.Project;
 import com.eggplant.emoji.service.ProjectService;
 import org.junit.After;
@@ -17,6 +18,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.hamcrest.Matchers;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
 
@@ -259,5 +263,43 @@ public class ProfessorControllerTest {
         assertNotNull(mockHttpServletResponse);
         assertNotNull(mockHttpServletResponse.getRedirectedUrl());
         assertTrue( mockHttpServletResponse.getRedirectedUrl().endsWith("/login"));
+    }
+
+
+    /**
+     * Tests that a project can be accessed via the project page at /projects/id
+     * @throws Exception
+     */
+    @Test
+    @WithAnonymousUser
+    public void testIndividualProjectPage() throws Exception {
+        // create a new project first
+        Project dummyProject = new Project();
+        dummyProject.setProjectName("Test Project for testing individual pages");
+        dummyProject.setDescription("This is a random project description");
+        dummyProject.setMinNumberOfStudents(2);
+        dummyProject.setMaxNumberOfStudents(5);
+        Set<Program> ProgramRestrictions = EnumSet.allOf(Program.class);
+        dummyProject.setProgramRestrictions(ProgramRestrictions);
+
+        Project p = this.projectService.addProject(dummyProject);
+
+        MvcResult result = this.mockMvc.perform(get("/projects/"+p.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString(p.getProjectName())))
+                .andExpect(content().string(containsString(p.getDescription())))
+                .andExpect(content().string(containsString("2")))
+                .andExpect(content().string(containsString("5")))
+                .andExpect(content().string(containsString("Electrical Engineering")))
+                .andExpect(content().string(containsString("Software Engineering")))
+                .andExpect(content().string(containsString("Biomedical Electrical")))
+                .andExpect(content().string(containsString("Computer Systems Engineering")))
+                .andExpect(content().string(containsString("Communication Engineering")))
+                .andReturn();
+        MockHttpServletResponse mockHttpServletResponse = result.getResponse();
+        assertNotNull(mockHttpServletResponse);
+
+        this.projectService.removeProjectByName(p.getProjectName());
+
     }
 }
