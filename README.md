@@ -33,17 +33,23 @@ This project is a web application to manage 4th year engineering capstone projec
 - The entity classes for the projects and users have been created
 - A ProstgreSQL server has been set up on the Heroku server
 - The application uses repositories to handle persistence
-- The basic home view is working with static deadlines, announcement, and projects pages
-- The basic professor view is working
-- The professor controller can add new projects
-- The professor controller can edit existing projects
-- The professor controller can archive existing projects
-- Professor view can display all the projects that were added and not archived
-- Projects view can display all the projects that were added and not archived
+- The header has a button linking to the log in / sign up page
+- The basic home view is working with announcements and projects pages
+- If logged in as a student, the home view holds a link to the student view
+- If logged in as a professor, the home view holds a link to the professor view
+- The announcements view displays all the announcements
+- If logged in as a coordinator, the announcements view allows for adding, deleting, or editing announcements
+- The projects view displays all the projects that were added and not archived
+- The projects view has links for every project to lead to detailed project pages
+- If logged in as a student who does not currently have a project, the projects view has buttons for students to join projects
+- The professor view is working; here the professor can add new projects, edit existing projects, and archive existing projects
+- The student view is working; here, details about the student and their registered project are displayed
+- The footer for all pages is set up to mimic actual Carleton web pages
 
-
-# Sprint [Mar 20 - Mar 27]
+# Sprint [Mar 20 - Apr 3]
 - [ ] Registration
 - [ ] Sign in
 - [ ] Authorization
 - [ ] Student view
+- [ ] Student project registration
+- [ ] Coordinator announcements
