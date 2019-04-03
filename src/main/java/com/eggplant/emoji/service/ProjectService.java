@@ -22,8 +22,8 @@ public class ProjectService {
         return project;
     }
 
-    public void addProject(Project project) {
-        repository.save(project);
+    public Project addProject(Project project) {
+        return repository.saveAndFlush(project);
     }
 
     public boolean updateProject(Project project) {
