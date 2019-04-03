@@ -4,18 +4,17 @@
 
 
 # Project Description
-This project is a web application to manage 4th year engineering capstone projects. This application is targeted towards students, professors, and program coordinators to help them manage all of the capstone projects for a given year. Additionally, this application allows students to submit documents, receive updates from the professors and coordinators, and register for presentations or meetings.
+This project is a web application to manage 4th year engineering capstone projects. This application is targeted towards students, professors, and program coordinators to help them manage all of the capstone projects for a given year. Additionally, this application allows students to receive updates from coordinators.
 
 
 # MVP Key Features
-- The application will have 3 main views; a home view, a student view, and a professor/coordinator view.
-- The home view will display the list of capstone projects along with their relevant details. Users will be able to search through these projects.
-- The application will offer authentication to allow users to log in as students, professors, or coordinators.
-- In the student view, students will be able to register for projects.
-- Once already registered, students will be able to submit documents for their project through the student view.
+- The application will have 3 main views; a home view, a student view, and a professor view
+- The home view will have links to the login/sign up page as well as the announcements and projects views
+- The projects view will display the list of projects along with their relevant details
+- The log in/sign up page will offer authentication to allow users to log in as students, professors, or coordinators.
+- In the projects view, students will be able to register for projects.
 - In the professor view, professors will be able to add projects for students to register for, edit projects and archive them.
-- Professors will also be able to download documents submitted to the projects they have added.
-- Coordinators will be able to change deadlines for the different documents to be submitted, as well as send mass emails to students of a group or all students of all groups
+- Coordinators will be able to add announcements to the announcements page
 
 
 # Model UML Class Diagram
@@ -41,7 +40,7 @@ This project is a web application to manage 4th year engineering capstone projec
 - If logged in as a coordinator, the announcements view allows for adding, deleting, or editing announcements
 - The projects view displays all the projects that were added and not archived
 - The projects view has links for every project to lead to detailed project pages
-- If logged in as a student who does not currently have a project, the projects view has buttons for students to join projects
+- If logged in as a student who does not currently have a project, the projects view has buttons for students to join projects (this only applies to projects with room for additional students)
 - The professor view is working; here the professor can add new projects, edit existing projects, and archive existing projects
 - The student view is working; here, details about the student and their registered project are displayed
 - The footer for all pages is set up to mimic actual Carleton web pages
