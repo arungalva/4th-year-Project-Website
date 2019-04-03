@@ -58,7 +58,7 @@ public class ProjectsController {
         if (currentUser != null) {
             model.addAttribute("currentProject", currentUser.getProject());
         }
-        return "viewProject";
+        return "viewproject";
     }
 
 
