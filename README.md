@@ -14,7 +14,7 @@ This project is a web application to manage 4th year engineering capstone projec
 - The log in/sign up page will offer authentication to allow users to log in as students, professors, or coordinators.
 - In the projects view, students will be able to register for projects.
 - In the professor view, professors will be able to add projects for students to register for, edit projects and archive them.
-- Coordinators will be able to add announcements to the announcements page
+- Coordinators will be able to add/edit/delete announcements in the announcements page
 
 
 # Model UML Class Diagram
