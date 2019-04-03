@@ -13,16 +13,15 @@
         </a>
         <!--TODO: Non-static pages fix up yet to come-->
         <!--<a href="#" class="item">Course Outline</a>-->
-        <a href="/announcements" class="item">Announcements</a>
+        <a th:href="@{/announcements}" class="item">Announcements</a>
         <!--<a href="deadlines" class="item">Deadlines</a>-->
-        <a href="projects" class="item">Projects</a>
+        <a th:href="@{/projects}" class="item">Projects</a>
         <div sec:authorize="isAuthenticated()" class="ui right floated dropdown item top-right">
             <div class="text">
                 <img class="ui avatar image" src="https://randomuser.me/api/portraits/lego/0.jpg">
                 <span sec:authentication="name"></span>
             </div><i class="dropdown icon"></i>
             <div class="menu">
-                <!--<div class="item">Profile</div>-->
                 <a class="item" href="/logout">Logout</a>
             </div>
         </div>
