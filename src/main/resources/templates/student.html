@@ -22,8 +22,9 @@
                 </td></tr>
             </div>
             <div th:if="${project != null}">
-                <tr><td> 
-                    <p th:text="'You have joined project ' + ${project.id} + ': ' + ${project.projectName}"></p>
+                <tr><td>
+                    <span th:text="'You have joined project ' + ${project.id} + ': '"></span>
+                    <a th:text="${project.projectName}" th:href="@{|/projects/${project.id}|}"></a>
                     <p th:if="${otherStudents != null}" th:text="'Other students who have joined this project: ' + ${otherStudents}"></p>
                     <p th:if="${otherStudents == null}">No other students have joined this project.</p>
                 </td></tr>

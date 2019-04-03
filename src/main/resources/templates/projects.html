@@ -31,7 +31,7 @@
         <div th:if="${not #lists.isEmpty(projects)}">
             <tr th:each="project: ${projects}" class="center aligned">
                 <td rowspan="1" th:text="${project.id}"></td>
-                <td rowspan="1" th:text="${project.projectName}"></td>
+                <td rowspan="1"> <a th:text="${project.projectName}" th:href="@{|/projects/${project.id}|}"></a></td>
                 <td rowspan="1" th:text="${project.maxNumberOfStudents}"></td>
                 <td rowspan="1">
                     <span th:each="program : ${project.programRestrictions}" th:text="${program.programCode + ' '}"></span>
