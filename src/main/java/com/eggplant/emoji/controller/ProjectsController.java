@@ -55,7 +55,9 @@ public class ProjectsController {
         Project existingProject = projectService.findById(projectId);
         model.addAttribute("project", existingProject);
         User currentUser = userService.getLoggedInUser();
-        model.addAttribute("currentProject", currentUser.getProject());
+        if (currentUser != null) {
+            model.addAttribute("currentProject", currentUser.getProject());
+        }
         return "viewProject";
     }
 
